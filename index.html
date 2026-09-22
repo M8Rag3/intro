@@ -86,22 +86,6 @@
     box-shadow: 0 6px 16px rgba(74, 61, 104, 0.35);
   }
 
-  /* 首页 hero 右侧的三个胶囊按钮(下滑) */
-  .hero-tabs {
-    position: absolute; right: 32px; top: 50%;
-    transform: translateY(-50%);
-    display: flex; flex-direction: column; gap: 12px; z-index: 2;
-  }
-  .hero-tabs a {
-    display: inline-block; text-decoration: none; text-align: center;
-    color: var(--purple-700); font-size: .9rem; font-weight: 600;
-    padding: 10px 22px; border-radius: 999px;
-    background: rgba(255,255,255,.94);
-    box-shadow: 0 6px 18px rgba(45, 27, 78, .25);
-    transition: all .25s;
-  }
-  .hero-tabs a:hover { background: var(--grad-accent); color: #fff; transform: translateY(-2px); }
-
   /* ---------- Hero ---------- */
   .hero {
     position: relative; overflow: hidden;
@@ -367,7 +351,6 @@
     nav { padding: 10px 14px; }
     .nav-links { gap: 6px; flex-wrap: wrap; }
     .nav-links a { padding: 6px 12px; font-size: .82rem; }
-    .hero-tabs { position: static; transform: none; flex-direction: row; justify-content: center; margin-top: 36px; }
     .about-grid { grid-template-columns: 1fr; }
     .skills-row { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
@@ -399,8 +382,8 @@
 <nav id="nav">
   <span class="logo" id="homeLink" title="回到首页">M8Rage</span>
   <ul class="nav-links">
-    <li><a href="#test1" class="page-tab active" data-page="test1">TEST1</a></li>
-    <li><a href="#test2" class="page-tab" data-page="test2">TEST2</a></li>
+    <li><a href="#test1" class="page-tab active" data-page="test1">首页</a></li>
+    <li><a href="#test2" class="page-tab" data-page="test2">其他</a></li>
   </ul>
 </nav>
 
@@ -420,15 +403,11 @@
     I Do Things for Fun.
   </p>
   <div class="cta">
-    <a class="btn btn-primary" href="#contact">联系我</a>
-    <a class="btn btn-ghost" href="#about">了解更多</a>
+    <a class="btn btn-primary" href="#about">关于我</a>
+    <a class="btn btn-ghost" href="#skills">我的特长</a>
+    <a class="btn btn-ghost" href="#contact">联系我</a>
   </div>
 
-  <nav class="hero-tabs">
-    <a href="#about" class="scroll-tab">关于</a>
-    <a href="#skills" class="scroll-tab">技能</a>
-    <a href="#contact" class="scroll-tab">联系</a>
-  </nav>
 </header>
 
 <section id="about">
