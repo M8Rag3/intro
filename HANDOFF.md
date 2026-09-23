@@ -19,7 +19,9 @@
 | 备份 | `C:\Users\M8Rage\Desktop\intro\index-backup.html` | 早期备份，可忽略 |
 | 标注参考图 | `C:\Users\M8Rage\Desktop\test.png` | 用户早期用来圈位置的红/青圈截图，**需求已废弃，不再使用** |
 
-- **Git 仓库**：`Desktop\intro`（分支 `main`）。注意：交接文档里的行号是旧版速查，改过几轮后可能有几十行偏移，以内容 grep 为准。
+- **Git 仓库**：`Desktop\intro`（分支 `main`），已关联远程 `origin` → `https://github.com/M8Rag3/intro`（公开）。
+- **GitHub Pages**：已开启，公网链接 `https://m8rag3.github.io/intro/`（main 分支根目录，push 后约 1–2 分钟自动更新）。
+- **gh CLI**：已安装并以 `M8Rag3` 登录（`gh auth status` 可查）。注意：交接文档里的行号是旧版速查，改过几轮后可能有几十行偏移，以内容 grep 为准。
 - **无关项目（不要碰）**：`C:\Users\M8Rage\Desktop\cursor\test\emilia-pomodoro.html`，一个番茄钟，在另一个仓库（分支 `master`），与本项目无关。
 
 ## 3. 页面结构与架构
