@@ -325,6 +325,29 @@
   .contact-card h3 { color: var(--purple-800); font-size: 1.05rem; }
   .contact-card p { color: var(--text-soft); font-size: .9rem; margin-top: 6px; word-break: break-all; }
 
+  /* ---------- 其他页：番剧下的三部作品（竖向排列，与番剧卡同宽） ---------- */
+  .anime-row {
+    display: grid; grid-template-columns: 1fr; gap: 18px;
+    margin-top: 28px;
+    /* 与 contact-grid 单列同宽：(100% - 两道 22px 间距) / 3 */
+    max-width: calc((100% - 44px) / 3);
+  }
+  .anime-card {
+    background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    overflow: hidden; display: flex; align-items: center; text-align: left;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .anime-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .anime-card .poster {
+    width: 108px; min-width: 108px; height: auto; display: block;
+    object-fit: cover; object-position: top center;
+    background: linear-gradient(160deg, var(--purple-100), var(--ice));
+    border-right: 1px dashed var(--purple-200);
+  }
+  .anime-card .anime-body { padding: 14px 22px; flex: 1; }
+  .anime-card h3 { color: var(--purple-800); font-size: 1.1rem; }
+  .anime-card p { color: var(--text-soft); font-size: .88rem; margin-top: 4px; }
+
   /* ---------- 其他页 ---------- */
   .other-block { max-width: 640px; margin: 56px auto 0; }
   .other-block h3 {
@@ -407,6 +430,7 @@
     .about-grid { grid-template-columns: 1fr; }
     .skills-row { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
+    .anime-row { max-width: 100%; }
     .hero { min-height: 80vh; }
   }
   @media (max-width: 420px) {
@@ -637,6 +661,30 @@
       </div>
     </div>
 
+    <div class="anime-row">
+      <div class="anime-card">
+        <img class="poster" src="img/emilia.jpg" alt="爱蜜莉雅">
+        <div class="anime-body">
+          <h3>Re:0</h3>
+          <p>从零开始的异世界生活，最爱爱蜜莉雅。</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img class="poster" src="img/roxy.png" alt="洛琪希">
+        <div class="anime-body">
+          <h3>无职转生</h3>
+          <p>魔法讲师洛琪希，越看越上头。</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img class="poster" src="img/yui.png" alt="由比滨结衣">
+        <div class="anime-body">
+          <h3>春物</h3>
+          <p>由比滨结衣，永远的小天使。</p>
+        </div>
+      </div>
+    </div>
+
     <div class="other-block">
       <h3>我的经历</h3>
       <ul class="highlight-list">
@@ -724,7 +772,7 @@
 
   // 滚动渐显：区块进入视口时淡入
   const revealEls = document.querySelectorAll(
-    '.section-head, .about-grid, .skills-row, .contact-grid, .other-block, .tag-cloud'
+    '.section-head, .about-grid, .skills-row, .contact-grid, .anime-row, .other-block, .tag-cloud'
   );
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {

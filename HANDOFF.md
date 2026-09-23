@@ -64,6 +64,11 @@
 
 ## 4. 当前最新状态
 
+0. **（2026-09-23 新增）「其他」页番剧卡下方已有三张竖排卡片**：Re:0（爱蜜莉雅）/ 无职转生（洛琪希）/ 春物（由比滨结衣）。
+   - 样式类：`.anime-row` / `.anime-card` / `.poster`，左图（108px 宽，整图不裁切、全脸可见）右文。
+   - **宽度对齐**：`.anime-row` 用 `max-width: calc((100% - 44px) / 3)`，正好与上方 contact-grid 单列（番剧卡）齐平、左对齐在其正下方；≤768px 时 `max-width: 100%`。
+   - 图片：`img/emilia.jpg`、`img/roxy.png`、`img/yui.png`（230×345，来自 AniList 角色图 CDN s4.anilist.co，可直连）。
+   - 文案是我写的默认稿，用户未逐字确认。
 1. **三个「关于/技能/联系」胶囊按钮已彻底删除**（HTML 和 CSS 都删干净了）。**不要再重建它们。**
 2. **Hero 三个 CTA**：「关于我 / 我的特长 / 联系我」，纯锚点平滑滚动，无 JS 干预。
 3. **导航标签**：`首页`/`其他`（内部 `data-page` 仍是 `test1`/`test2`，不要改）；另有 🌙 主题切换按钮。
@@ -79,10 +84,34 @@
 - `test.png`（红圈/青圈标注图）是用户早期用来指定按钮位置的，**该需求已废弃**，不要再纠结这张图。
 - 用户以中文交流，偏好简洁直接的改动；不确定时先做最合理的默认实现并清楚说明，让用户指正，而不是反复追问。
 
-## 6. 可能的下一步（未确认，供参考）
+## 6. 进行中的任务（2026-09-23 中断，恢复时从这里继续）
 
-- 「其他」页内容是默认稿，待用户过目/指正。
-- 之前提过想把 `Desktop\intro` 仓库关联到 **GitHub remote**（尚未做）。
+### 6.1 「游戏」三张卡（用户已点名：逃离塔科夫 / 以撒的结合 / 无畏契约）
+- **目标**：在「其他」页游戏卡下方加三张同款式卡（结构同番剧那三张，各自对齐到游戏卡正下方）。
+- **计划的布局改法**：把现在的 `.anime-row`（只有番剧一列）重构为三列的外层网格（如 `.under-grid`，`repeat(3,1fr)` gap 22px，与 contact-grid 一致），每列内部竖排卡；番剧列放现有三张，游戏列放新三张，之后剪辑列同理。**注意：用户明确要「竖向排列、宽度与上方单卡齐平」，别改回横排。**
+- **图片进度**：
+  - ✅ `img/isaac.jpg`（以撒，300×450 竖版，Steam CDN `cdn.cloudflare.steamstatic.com/steam/apps/250900/library_600x900.jpg`，可直连）
+  - ✅ `img/valorant.png`（无畏契约，600×900，官方 playvalorant CMS `cmsassets.rgpub.io`，蕾娜+雷兹双人图，已验证内容）
+  - ❌ **逃离塔科夫的图还没搞定**。已排除/失败的路：escapefromtarkov.com 403（Cloudflare）、battlestategames.com HEAD 通但 GET 000、fandom/baike/taptap 图床不通或反爬、百度图片反爬（Forbid spider）、Bing 图片搜返回的前几个结果是垃圾（BMI 图等，需换关键词/取更多结果验证内容再下载，下载后必须用 Read 看图确认是塔科夫）。
+  - 可用图床白名单：`s4.anilist.co`、`cdn.cloudflare.steamstatic.com`、`cmsassets.rgpub.io`、`i0.hdslb.com`、`static.wikia.nocookie.net`（CDN 通但拿不到页面）、`tse*.mm.bing.net`、raw.githubusercontent.com、SteamGridDB 的 `cdn.steamgriddb.com`（通，但没翻到具体资源 id）。
+  - Steam 全站（community/store/api）校园网全墙，**拿不到用户 Steam 库**；但 Steam 图床通。
+- **卡片文案**也还是默认稿待写。
+
+### 6.2 「剪辑」三张卡（等用户给素材）
+- 目标：剪辑卡下方同样三张。
+- 需要用户给 3 个他的 B 站投稿链接（形如 `https://www.bilibili.com/video/BVxxxx`）——单视频接口 `x/web-interface/view?bvid=` 实测可用（可拿标题+封面）；**投稿列表接口（space/wbi/arc/search）被风控 412**，别再试列表接口。
+- 用户 B 站 mid：30166441；Steam/B站 vanity 名都是 M8Rage。
+
+### 6.3 其它待办
+- 「其他」页所有文案均为默认稿，待用户过目。
+- 用户已明确：**改完不要每次自动 push**，本地 commit 即可，用户说推送再推。
+
+## 6.5 环境与网络踩坑（校园网，2026-09-23 实测）
+
+- **不要配代理**（用户原话：校园网会被抓）。
+- 通：github.com、api.github.com、anilist、steam 图床、playvalorant/cmsassets、bing、bilibili 图床和单视频接口、cdn.steamgriddb.com、img.tapimg.com、tarkov.dev、taptap.cn 首页。
+- 不通/反爬：Steam 全站、fandom 主站、upload.wikimedia.org、百度百科/百度图片（403/反爬）、B 站投稿列表接口（412）、battlestategames GET、lp.wegame.com.cn。
+- gh CLI 已装并以 M8Rag3 登录；远程 `origin` = `https://github.com/M8Rag3/intro`（公开）；GitHub Pages `https://m8rag3.github.io/intro/` 已开。
 
 ## 7. 快速定位速查
 
