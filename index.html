@@ -4,6 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>M8Rage · 个人介绍</title>
+<meta name="description" content="M8Rage（吴昂霖）的个人介绍页 — 杭州智科学生，I Do Things for Fun.，爱蜜莉雅紫调。" />
+<meta property="og:title" content="M8Rage · 个人介绍" />
+<meta property="og:description" content="I Do Things for Fun." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%236b5b95'/%3E%3Ctext x='50' y='70' font-size='56' text-anchor='middle' fill='%23ffffff'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
 <style>
   :root {
     /* 爱蜜莉雅紫色调 */
@@ -431,6 +436,16 @@
     letter-spacing: .1em;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- 滚动渐显 ---------- */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
 </style>
 </head>
 <body class="modal-open">
@@ -576,13 +591,13 @@
     </div>
 
     <div class="contact-grid">
-      <div class="contact-card">
+      <a class="contact-card" href="mailto:1652702730@qq.com">
         <div class="icon">✉</div>
         <h3>邮箱</h3>
         <p>1652702730@qq.com</p>
-      </div>
+      </a>
       <a class="contact-card" href="https://github.com/M8Rag3" target="_blank" rel="noopener">
-        <div class="icon">⌥</div>
+        <div class="icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14 0 1.55-.02 2.79-.02 3.17 0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></div>
         <h3>GitHub</h3>
         <p>github.com/M8Rag3</p>
       </a>
@@ -693,14 +708,31 @@
     localStorage.setItem('theme', html.dataset.theme);
   });
 
-  // 开场弹窗：点击「确定」后关闭并解锁滚动
+  // 开场弹窗：点击「确定」后关闭并解锁滚动；同一会话只弹一次
   const introModal = document.getElementById('introModal');
   const introConfirm = document.getElementById('introConfirm');
-  if (introConfirm) {
+  if (sessionStorage.getItem('introSeen')) {
+    introModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  } else if (introConfirm) {
     introConfirm.addEventListener('click', () => {
       introModal.classList.add('hidden');
       document.body.classList.remove('modal-open');
+      sessionStorage.setItem('introSeen', '1');
     });
+  }
+
+  // 滚动渐显：区块进入视口时淡入
+  const revealEls = document.querySelectorAll(
+    '.section-head, .about-grid, .skills-row, .contact-grid, .other-block, .tag-cloud'
+  );
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => { el.classList.add('reveal'); io.observe(el); });
   }
 </script>
 </body>
