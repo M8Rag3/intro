@@ -327,13 +327,14 @@
 
   /* ---------- 其他页：番剧/游戏卡下方的竖排小卡（三列，与 contact-grid 对齐） ---------- */
   .under-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column; /* 按列填充：番剧列 → 游戏列 → 剪辑列 */
+    gap: 22px;
     margin-top: 28px;
   }
-  .card-col {
-    display: grid; grid-template-columns: 1fr; gap: 18px;
-    align-content: start;
-  }
+  .card-col { display: contents; } /* 列容器不产生盒子，9 张卡直接参与行对齐 */
   .anime-card {
     background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
     overflow: hidden; display: flex; align-items: center; text-align: left;
@@ -433,7 +434,7 @@
     .about-grid { grid-template-columns: 1fr; }
     .skills-row { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
-    .under-grid { grid-template-columns: 1fr; }
+    .under-grid { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
     .hero { min-height: 80vh; }
   }
   @media (max-width: 420px) {
