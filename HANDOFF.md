@@ -66,8 +66,9 @@
 
 0. **（2026-09-23）「其他」页 contact-grid 下方已有 `.under-grid` 三列网格**（`repeat(3,1fr) gap 22px`，与 contact-grid 对齐，≤768px 变单列），每列 `.card-col` 内竖排三张 `.anime-card`（左图 108px 全脸右文）：
    - **第一列（番剧）**：Re:0（爱蜜莉雅）/ 无职转生（洛琪希）/ 春物（由比滨结衣），图 `img/emilia.jpg`、`roxy.png`、`yui.png`（AniList 230×345）。
-   - **第二列（游戏）**：逃离塔科夫 / 以撒的结合 / 无畏契约，图 `img/tarkov.jpg`（1920×2440，360 图片搜到的官方竖版海报，i0.hdslb.com）、`img/isaac.jpg`（Steam 300×450）、`img/valorant.png`（playvalorant CMS 600×900）。
-   - 第三列留给「剪辑」（等用户给 3 个 B 站投稿链接）。
+   - **第二列（游戏）**：逃离塔科夫 / 以撒的结合 / 无畏契约，图 `img/tarkov.jpg`（1920×2440，360 图片搜到的官方竖版海报，i0.hdslb.com）、`img/isaac.jpg`（Steam 300×450）、`img/valorant-logo.svg`（simple-icons 官方 V logo，改填充色 `#FF4655`，用户点名要 logo；原 `valorant.png` 留档未用）。
+   - **第三列（剪辑）**：三张 `<a>` 卡（点击跳 B 站，`target="_blank"`），封面 `img/clip1-3.jpg`（i?.hdslb.com 官方封面，16:9 横图所以卡会比竖图卡矮一点）：
+     1. BV1SoxdeaEAp「[Valorant]Novocaine 2」2. BV1nQjU6SE2k「真男人必看霓虹町游龙148秒」3. BV15m411r7wn「全网最燃的瓦罗兰特集锦」。
    - reveal 选择器用的是 `.under-grid`（不是 `.anime-row`，该类名已弃用）。文案均为默认稿，用户未逐字确认。
 1. **三个「关于/技能/联系」胶囊按钮已彻底删除**（HTML 和 CSS 都删干净了）。**不要再重建它们。**
 2. **Hero 三个 CTA**：「关于我 / 我的特长 / 联系我」，纯锚点平滑滚动，无 JS 干预。
@@ -92,9 +93,9 @@
 - 剩余：用户看过后按反馈微调；做完只本地 commit 不 push。
 - 图床坑记录见 §6.5（塔科夫图最终来自 360 图片 `image.so.com/j` API → i0.hdslb.com 直链）。
 
-### 6.2 「剪辑」三张卡（等用户给素材）
-- 目标：剪辑卡下方同样三张。
-- 需要用户给 3 个他的 B 站投稿链接（形如 `https://www.bilibili.com/video/BVxxxx`）——单视频接口 `x/web-interface/view?bvid=` 实测可用（可拿标题+封面）；**投稿列表接口（space/wbi/arc/search）被风控 412**，别再试列表接口。
+### 6.2 「剪辑」三张卡 — ✅ 已完成
+- 用户已给 3 个投稿链接，封面+标题已用单视频接口 `x/web-interface/view?bvid=` 抓取，第三列卡已写进 HTML（链接可点跳 B 站）。
+- 单视频接口可用；**投稿列表接口（space/wbi/arc/search）被风控 412**，别再试列表接口。
 - 用户 B 站 mid：30166441；Steam/B站 vanity 名都是 M8Rage。
 
 ### 6.3 其它待办
