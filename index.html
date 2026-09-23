@@ -29,6 +29,29 @@
     --grad-accent: linear-gradient(135deg, #7d6fa0, #b9a8dd);
   }
 
+  /* 暗色模式 */
+  [data-theme="dark"] {
+    --purple-900: #e9e3f6;
+    --purple-800: #d5ccef;
+    --purple-700: #b9a8dd;
+    --purple-600: #8e7cc3;
+    --purple-500: #7d6fa0;
+    --purple-400: #6b5b95;
+    --purple-300: #4a3d68;
+    --purple-200: #3a2a5c;
+    --purple-100: #2d1b4e;
+    --purple-50:  #1a1028;
+    --ice:        #2a3a4a;
+    --ice-deep:   #4a6a8a;
+    --text:       #e9e3f6;
+    --text-soft:  #b9a8dd;
+    --card:       #2d1b4e;
+    --shadow:     0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-lg:  0 20px 50px rgba(0, 0, 0, 0.4);
+    --grad-hero: linear-gradient(135deg, #1a1028 0%, #2d1b4e 55%, #4a3d68 100%);
+    --grad-accent: linear-gradient(135deg, #4a3d68, #6b5b95);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
@@ -56,6 +79,9 @@
     border-bottom: 1px solid var(--purple-100);
     z-index: 100;
     transition: box-shadow .3s;
+  }
+  [data-theme="dark"] nav {
+    background: rgba(26, 16, 40, 0.85);
   }
   nav.scrolled { box-shadow: 0 6px 20px rgba(74, 61, 104, 0.12); }
 
@@ -86,6 +112,18 @@
     box-shadow: 0 6px 16px rgba(74, 61, 104, 0.35);
   }
 
+  /* 暗色模式切换按钮 */
+  .theme-toggle {
+    background: none; border: none; cursor: pointer;
+    font-size: 1.2rem; padding: 8px 12px;
+    border-radius: 999px; transition: all .25s;
+    line-height: 1;
+  }
+  .theme-toggle:hover {
+    background: rgba(255,255,255,.2);
+    transform: scale(1.1);
+  }
+
   /* ---------- Hero ---------- */
   .hero {
     position: relative; overflow: hidden;
@@ -111,12 +149,9 @@
 
   .hero .avatar {
     width: 128px; height: 128px; border-radius: 50%;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,.06)),
-      var(--purple-400);
+    background: var(--purple-400);
     border: 3px solid rgba(255,255,255,.5);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.6rem; color: #fff; font-weight: 600;
+    object-fit: cover;
     box-shadow: 0 12px 40px rgba(45, 27, 78, 0.4);
     margin-bottom: 28px;
   }
@@ -141,6 +176,10 @@
     font-size: 1.02rem;
     animation: fadeUp .9s .35s ease both;
   }
+
+  /* 暗色模式 hero 文字适配 */
+  [data-theme="dark"] .hero .tagline { color: #fff; }
+  [data-theme="dark"] .hero .intro { color: #fff; }
   .hero .cta {
     margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;
     justify-content: center;
@@ -199,9 +238,8 @@
   }
   .about-card .avatar-lg {
     width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 16px;
-    background: var(--grad-accent); color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; font-weight: 600;
+    background: var(--grad-accent);
+    object-fit: cover;
   }
   .about-card h3 { color: var(--purple-800); font-size: 1.25rem; }
   .about-card .role { color: var(--purple-400); font-size: .9rem; margin: 4px 0 16px; }
@@ -237,18 +275,21 @@
   }
   .skill-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
   .skill-card .skill-img {
-    width: 100%; aspect-ratio: 1 / 1;
+    width: 100%; aspect-ratio: 4 / 3;
     background: linear-gradient(160deg, var(--purple-100), var(--ice));
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    display: flex; align-items: center; justify-content: center;
     border-bottom: 1px dashed var(--purple-200);
+    padding: 24px;
   }
-  .skill-img .ph-icon { font-size: 2.6rem; line-height: 1; opacity: .85; }
-  .skill-img .ph-tag {
-    font-size: .7rem; letter-spacing: .24em; color: var(--purple-500);
-    background: rgba(255,255,255,.75); padding: 3px 12px; border-radius: 999px;
+  .skill-img img {
+    width: 64px; height: 64px;
+    object-fit: contain;
+    opacity: .9;
+    transition: transform .3s;
   }
+  .skill-card:hover .skill-img img { transform: scale(1.1); }
   .skill-card .skill-body {
-    padding: 20px 18px 24px; text-align: center;
+    padding: 20px 18px 32px; text-align: center;
     display: flex; flex-direction: column; gap: 8px; flex: 1;
   }
   .skill-body h3 { color: var(--purple-800); font-size: 1.1rem; }
@@ -359,9 +400,39 @@
   @media (max-width: 420px) {
     .skills-row { grid-template-columns: 1fr; }
   }
+
+  /* ---------- 加载动画 ---------- */
+  .loader {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--grad-hero);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 9999;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-spinner {
+    width: 48px; height: 48px;
+    border: 4px solid rgba(255,255,255,.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  .loader-text {
+    color: rgba(255,255,255,.7);
+    font-size: .9rem; margin-top: 16px;
+    letter-spacing: .1em;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body class="modal-open">
+
+<!-- ===== 加载动画 ===== -->
+<div class="loader" id="loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">Loading...</div>
+</div>
 
 <!-- ===== 开场弹窗：点「确定」后关闭 ===== -->
 <div class="intro-modal" id="introModal">
@@ -373,7 +444,7 @@
       由99%的ai和1%的区完成
     </p>
 
-    <img class="modal-img" src="isacc.png" alt="isacc">
+    <img class="modal-img" src="img/isacc.png" alt="isacc">
 
     <button class="btn btn-primary" id="introConfirm" type="button">确定</button>
   </div>
@@ -384,6 +455,7 @@
   <ul class="nav-links">
     <li><a href="#test1" class="page-tab active" data-page="test1">首页</a></li>
     <li><a href="#test2" class="page-tab" data-page="test2">其他</a></li>
+    <li><button class="theme-toggle" id="themeToggle" title="切换暗色模式">🌙</button></li>
   </ul>
 </nav>
 
@@ -395,9 +467,9 @@
   <span class="crystal" style="bottom:16%; right:14%; font-size:2.2rem; animation-delay:.6s;">✦</span>
   <span class="crystal" style="top:12%; left:46%; font-size:1.2rem; animation-delay:1.8s;">✧</span>
 
-  <div class="avatar">M</div>
+  <img class="avatar" src="img/emt.jpg" alt="M8Rage">
   <h1>M8Rage</h1>
-  <p class="tagline">一条蠕动的区</p>
+  <p class="tagline">吴昂霖</p>
   <div class="divider"></div>
   <p class="intro">
     I Do Things for Fun.
@@ -420,7 +492,7 @@
 
     <div class="about-grid">
       <aside class="about-card">
-        <div class="avatar-lg">M</div>
+        <img class="avatar-lg" src="img/emt.jpg" alt="M8Rage">
         <h3>M8Rage</h3>
         <p class="role">学生</p>
         <ul class="meta">
@@ -460,21 +532,20 @@
     </div>
 
     <div class="skills-row">
-      <!-- 占位图：换成正式图片时，把 .skill-img 里的内容替换为 <img src="xxx.png" alt="摸鱼"> 即可 -->
       <div class="skill-card">
-        <div class="skill-img"><span class="ph-icon">🖼</span><span class="ph-tag">占位图</span></div>
+        <div class="skill-img"><img src="img/salvation.png" alt="摸鱼"></div>
         <div class="skill-body"><h3>摸鱼</h3><p>爽摸。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><span class="ph-icon">🖼</span><span class="ph-tag">占位图</span></div>
+        <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑"></div>
         <div class="skill-body"><h3>视频剪辑</h3><p>可以断章取义。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><span class="ph-icon">🖼</span><span class="ph-tag">占位图</span></div>
+        <div class="skill-img"><img src="img/wiggleworm.png" alt="编程"></div>
         <div class="skill-body"><h3>编程</h3><p>选的技术，会写helloworld。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><span class="ph-icon">🖼</span><span class="ph-tag">占位图</span></div>
+        <div class="skill-img"><img src="img/portablesolts.png" alt="AI"></div>
         <div class="skill-body"><h3>AI</h3><p>豆沙馅都能被打出来。</p></div>
       </div>
     </div>
@@ -498,12 +569,12 @@
     </div>
 
     <div class="contact-grid">
-      <a class="contact-card" href="mailto:your@email.com">
+      <div class="contact-card">
         <div class="icon">✉</div>
         <h3>邮箱</h3>
         <p>1652702730@qq.com</p>
-      </a>
-      <a class="contact-card" href="https://github.com/yourname" target="_blank" rel="noopener">
+      </div>
+      <a class="contact-card" href="https://github.com/M8Rag3" target="_blank" rel="noopener">
         <div class="icon">⌥</div>
         <h3>GitHub</h3>
         <p>github.com/M8Rag3</p>
@@ -533,6 +604,12 @@
 </footer>
 
 <script>
+  // 页面加载完成后隐藏加载动画
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => loader.classList.add('hidden'), 300);
+  });
+
   // 导航栏滚动阴影
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => {
@@ -559,18 +636,6 @@
     showPage(t.dataset.page);
   }));
 
-  // 首页 hero 右侧的「关于 / 技能 / 联系」保持下滑滚动
-  document.querySelectorAll('.scroll-tab').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      showPage('test1', false);
-      const target = document.querySelector(a.getAttribute('href'));
-      requestAnimationFrame(() => {
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  });
-
   // logo 回到首页(TEST1)顶部
   document.getElementById('homeLink').addEventListener('click', e => {
     e.preventDefault();
@@ -580,6 +645,19 @@
 
   // 根据地址栏 hash 显示初始页面
   showPage(location.hash === '#test2' ? 'test2' : 'test1', false);
+
+  // 暗色模式切换
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) html.dataset.theme = savedTheme;
+  themeToggle.textContent = html.dataset.theme === 'dark' ? '☀️' : '🌙';
+  themeToggle.addEventListener('click', () => {
+    const isDark = html.dataset.theme === 'dark';
+    html.dataset.theme = isDark ? '' : 'dark';
+    themeToggle.textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('theme', html.dataset.theme);
+  });
 
   // 开场弹窗：点击「确定」后关闭并解锁滚动
   const introModal = document.getElementById('introModal');
