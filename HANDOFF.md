@@ -19,7 +19,7 @@
 | 备份 | `C:\Users\M8Rage\Desktop\intro\index-backup.html` | 早期备份，可忽略 |
 | 标注参考图 | `C:\Users\M8Rage\Desktop\test.png` | 用户早期用来圈位置的红/青圈截图，**需求已废弃，不再使用** |
 
-- **Git 仓库**：`Desktop\intro`（分支 `main`），最近一次提交 `8cf072f "Add M8Rage personal intro page"`，**当前 `index.html` 有未提交的修改**。
+- **Git 仓库**：`Desktop\intro`（分支 `main`）。注意：交接文档里的行号是旧版速查，改过几轮后可能有几十行偏移，以内容 grep 为准。
 - **无关项目（不要碰）**：`C:\Users\M8Rage\Desktop\cursor\test\emilia-pomodoro.html`，一个番茄钟，在另一个仓库（分支 `master`），与本项目无关。
 
 ## 3. 页面结构与架构
@@ -60,24 +60,15 @@
 - 响应式断点：`@media (max-width: 768px)` 和 `(max-width: 420px)`。
 - 主按钮 `.btn-primary`（白底），描边按钮 `.btn-ghost`（透明 + 白描边）。
 
-## 4. 当前最新状态（最近几次改动后的结果）
+## 4. 当前最新状态
 
 1. **三个「关于/技能/联系」胶囊按钮已彻底删除**（HTML 和 CSS 都删干净了）。**不要再重建它们。**
-2. **Hero 的三个 CTA 按钮**（第 405–409 行）现在是：
-   ```html
-   <div class="cta">
-     <a class="btn btn-primary" href="#about">关于我</a>
-     <a class="btn btn-ghost" href="#skills">我的特长</a>
-     <a class="btn btn-ghost" href="#contact">联系我</a>
-   </div>
-   ```
-   点击是**纯锚点平滑滚动**（`href="#about"` 等），无 JS 干预。
-3. **导航标签文字**已从 `TEST1`/`TEST2` 改为 `首页`/`其他`（内部 `data-page` 仍是 `test1`/`test2`，不要改）。
-4. **JS 里有一段死代码**（第 562–572 行）：
-   ```js
-   document.querySelectorAll('.scroll-tab').forEach(...)  // 已无匹配元素
-   ```
-   无害，可顺手清理，但不是必须。
+2. **Hero 三个 CTA**：「关于我 / 我的特长 / 联系我」，纯锚点平滑滚动，无 JS 干预。
+3. **导航标签**：`首页`/`其他`（内部 `data-page` 仍是 `test1`/`test2`，不要改）；另有 🌙 主题切换按钮。
+4. **已上线功能**（后续提交加入）：暗色模式（`data-theme="dark"` + localStorage）、开场弹窗（`#introModal`）、加载动画（`#loader`）、头像 `img/emt.jpg`、技能卡片配图 `img/*.png`。
+5. **「其他」页（`#test2`）已填充**：番剧/游戏/剪辑三张卡（复用 `contact-grid`/`contact-card`）+ `.other-block` 经历列表（复用 `highlight-list`）。内容是 agent 按已知信息写的默认稿，**用户未逐字确认，可能要改**。
+6. **「关于我」的 highlight-list** 模板占位文案已替换成实际内容。
+7. `.scroll-tab` 死代码已清理。
 
 ## 5. 历史沿革 & 踩过的坑（务必读，避免重复返工）
 
@@ -88,10 +79,8 @@
 
 ## 6. 可能的下一步（未确认，供参考）
 
-- `TEST2`（「其他」页）内容目前是**占位**，可能需要填充真实内容。
-- **Git**：`index.html` 有未提交修改，用户之前表示想保存到 git；可能需要 `commit`。
+- 「其他」页内容是默认稿，待用户过目/指正。
 - 之前提过想把 `Desktop\intro` 仓库关联到 **GitHub remote**（尚未做）。
-- 可顺手清理第 562 行起的 `.scroll-tab` 死代码。
 
 ## 7. 快速定位速查
 
