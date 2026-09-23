@@ -64,11 +64,11 @@
 
 ## 4. 当前最新状态
 
-0. **（2026-09-23 新增）「其他」页番剧卡下方已有三张竖排卡片**：Re:0（爱蜜莉雅）/ 无职转生（洛琪希）/ 春物（由比滨结衣）。
-   - 样式类：`.anime-row` / `.anime-card` / `.poster`，左图（108px 宽，整图不裁切、全脸可见）右文。
-   - **宽度对齐**：`.anime-row` 用 `max-width: calc((100% - 44px) / 3)`，正好与上方 contact-grid 单列（番剧卡）齐平、左对齐在其正下方；≤768px 时 `max-width: 100%`。
-   - 图片：`img/emilia.jpg`、`img/roxy.png`、`img/yui.png`（230×345，来自 AniList 角色图 CDN s4.anilist.co，可直连）。
-   - 文案是我写的默认稿，用户未逐字确认。
+0. **（2026-09-23）「其他」页 contact-grid 下方已有 `.under-grid` 三列网格**（`repeat(3,1fr) gap 22px`，与 contact-grid 对齐，≤768px 变单列），每列 `.card-col` 内竖排三张 `.anime-card`（左图 108px 全脸右文）：
+   - **第一列（番剧）**：Re:0（爱蜜莉雅）/ 无职转生（洛琪希）/ 春物（由比滨结衣），图 `img/emilia.jpg`、`roxy.png`、`yui.png`（AniList 230×345）。
+   - **第二列（游戏）**：逃离塔科夫 / 以撒的结合 / 无畏契约，图 `img/tarkov.jpg`（1920×2440，360 图片搜到的官方竖版海报，i0.hdslb.com）、`img/isaac.jpg`（Steam 300×450）、`img/valorant.png`（playvalorant CMS 600×900）。
+   - 第三列留给「剪辑」（等用户给 3 个 B 站投稿链接）。
+   - reveal 选择器用的是 `.under-grid`（不是 `.anime-row`，该类名已弃用）。文案均为默认稿，用户未逐字确认。
 1. **三个「关于/技能/联系」胶囊按钮已彻底删除**（HTML 和 CSS 都删干净了）。**不要再重建它们。**
 2. **Hero 三个 CTA**：「关于我 / 我的特长 / 联系我」，纯锚点平滑滚动，无 JS 干预。
 3. **导航标签**：`首页`/`其他`（内部 `data-page` 仍是 `test1`/`test2`，不要改）；另有 🌙 主题切换按钮。
@@ -86,16 +86,11 @@
 
 ## 6. 进行中的任务（2026-09-23 中断，恢复时从这里继续）
 
-### 6.1 「游戏」三张卡（用户已点名：逃离塔科夫 / 以撒的结合 / 无畏契约）
-- **目标**：在「其他」页游戏卡下方加三张同款式卡（结构同番剧那三张，各自对齐到游戏卡正下方）。
-- **计划的布局改法**：把现在的 `.anime-row`（只有番剧一列）重构为三列的外层网格（如 `.under-grid`，`repeat(3,1fr)` gap 22px，与 contact-grid 一致），每列内部竖排卡；番剧列放现有三张，游戏列放新三张，之后剪辑列同理。**注意：用户明确要「竖向排列、宽度与上方单卡齐平」，别改回横排。**
-- **图片进度**：
-  - ✅ `img/isaac.jpg`（以撒，300×450 竖版，Steam CDN `cdn.cloudflare.steamstatic.com/steam/apps/250900/library_600x900.jpg`，可直连）
-  - ✅ `img/valorant.png`（无畏契约，600×900，官方 playvalorant CMS `cmsassets.rgpub.io`，蕾娜+雷兹双人图，已验证内容）
-  - ❌ **逃离塔科夫的图还没搞定**。已排除/失败的路：escapefromtarkov.com 403（Cloudflare）、battlestategames.com HEAD 通但 GET 000、fandom/baike/taptap 图床不通或反爬、百度图片反爬（Forbid spider）、Bing 图片搜返回的前几个结果是垃圾（BMI 图等，需换关键词/取更多结果验证内容再下载，下载后必须用 Read 看图确认是塔科夫）。
-  - 可用图床白名单：`s4.anilist.co`、`cdn.cloudflare.steamstatic.com`、`cmsassets.rgpub.io`、`i0.hdslb.com`、`static.wikia.nocookie.net`（CDN 通但拿不到页面）、`tse*.mm.bing.net`、raw.githubusercontent.com、SteamGridDB 的 `cdn.steamgriddb.com`（通，但没翻到具体资源 id）。
-  - Steam 全站（community/store/api）校园网全墙，**拿不到用户 Steam 库**；但 Steam 图床通。
-- **卡片文案**也还是默认稿待写。
+### 6.1 「游戏」三张卡 — ✅ 已完成（本轮已写进 HTML，待用户过目）
+- 布局重构 `.anime-row` → `.under-grid` 三列 + `.card-col` 竖排，游戏列三张卡已加（塔科夫/以撒/无畏契约），三张图均已下载验图。
+- 文案是默认稿（如「硬核搜打撤，活着出去才算赢」），用户未逐字确认。
+- 剩余：用户看过后按反馈微调；做完只本地 commit 不 push。
+- 图床坑记录见 §6.5（塔科夫图最终来自 360 图片 `image.so.com/j` API → i0.hdslb.com 直链）。
 
 ### 6.2 「剪辑」三张卡（等用户给素材）
 - 目标：剪辑卡下方同样三张。
