@@ -159,7 +159,7 @@
   /* ---------- Hero ---------- */
   .hero {
     position: relative; overflow: hidden;
-    min-height: 92vh;
+    min-height: min(86vh, 760px);
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; text-align: center;
     padding: 120px 24px 80px;
@@ -283,6 +283,39 @@
   .about-card .meta li span:first-child { color: var(--text-soft); }
   .about-card .meta li span:last-child { font-weight: 500; color: var(--purple-800); }
 
+  /* ---------- 剪辑作品 ---------- */
+  .works-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px;
+  }
+  .work-card {
+    min-width: 0; overflow: hidden;
+    background: var(--card); border: 1px solid var(--purple-100);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    color: inherit; text-decoration: none;
+    display: flex; flex-direction: column;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .work-card:hover {
+    transform: translateY(-6px); box-shadow: var(--shadow-lg);
+    border-color: var(--purple-300);
+  }
+  .work-media {
+    aspect-ratio: 16 / 9; overflow: hidden;
+    background: linear-gradient(160deg, var(--purple-100), var(--ice));
+    border-bottom: 1px dashed var(--purple-200);
+  }
+  .work-media img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; transition: transform .35s ease;
+  }
+  .work-card:hover .work-media img { transform: scale(1.04); }
+  .work-body {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 20px 20px 24px; flex: 1;
+  }
+  .work-body h3 { color: var(--purple-800); font-size: 1.08rem; }
+  .work-body p { color: var(--text-soft); font-size: .9rem; line-height: 1.65; }
+
   .about-text h3 { color: var(--purple-800); font-size: 1.4rem; margin-bottom: 16px; }
   .about-text p { color: var(--text-soft); margin-bottom: 14px; }
   .about-text p strong { color: var(--purple-700); }
@@ -355,7 +388,7 @@
   /* ---------- 其他页：番剧/游戏卡下方的竖排小卡（三列，与 contact-grid 对齐） ---------- */
   .under-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, auto);
     grid-auto-flow: column; /* 按列填充：番剧列 → 游戏列 → 剪辑列 */
     gap: 22px;
@@ -427,10 +460,10 @@
   }
 
   .intro-modal-box h2 {
-    color: var(--purple-800); font-size: 1.5rem; margin-bottom: 6px;
+    color: #3a2a5c; font-size: 1.5rem; margin-bottom: 6px;
   }
   .intro-modal-box .modal-sub {
-    color: var(--purple-400); font-size: .82rem; letter-spacing: .18em;
+    color: #7d6fa0; font-size: .82rem; letter-spacing: .18em;
     margin-bottom: 20px;
   }
   .modal-img {
@@ -439,7 +472,7 @@
     margin-bottom: 20px;
   }
   .modal-text {
-    color: var(--text-soft); font-size: .95rem;
+    color: #6b5b95; font-size: .95rem;
     text-align: center; margin-bottom: 26px;
   }
 
@@ -454,15 +487,22 @@
   .logo { cursor: pointer; user-select: none; }
 
   /* ---------- 响应式 ---------- */
+  @media (max-width: 900px) {
+    .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
   @media (max-width: 768px) {
     nav { padding: 10px 14px; }
     .nav-links { gap: 6px; flex-wrap: wrap; }
     .nav-links a { padding: 6px 12px; font-size: .82rem; }
     .about-grid { grid-template-columns: 1fr; }
+    .works-grid { grid-template-columns: 1fr; }
     .skills-row { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
     .under-grid { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
     .hero { min-height: 80vh; }
+  }
+  @media (max-width: 600px) {
+    .works-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 420px) {
     .skills-row { grid-template-columns: 1fr; }
@@ -560,6 +600,7 @@
   </p>
   <div class="cta">
     <a class="btn btn-primary" href="#about">关于我</a>
+    <a class="btn btn-ghost" href="#works">我的剪辑</a>
     <a class="btn btn-ghost" href="#skills">我的特长</a>
     <a class="btn btn-ghost" href="#contact">联系我</a>
   </div>
@@ -603,6 +644,47 @@
           <li>非常的随便</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="works">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Works</span>
+      <h2>我的剪辑</h2>
+    </div>
+
+    <div class="works-grid">
+      <a class="work-card" href="https://www.bilibili.com/video/BV1SoxdeaEAp" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 Novocaine 2">
+        <div class="work-media">
+          <img src="img/clip1.webp" alt="Novocaine 2 视频封面" width="640" height="400" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>Novocaine 2</h3>
+          <p>区</p>
+        </div>
+      </a>
+
+      <a class="work-card" href="https://www.bilibili.com/video/BV1nQjU6SE2k" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 霓虹町游龙148秒">
+        <div class="work-media">
+          <img src="img/clip2.webp" alt="霓虹町游龙148秒视频封面" width="640" height="360" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>霓虹町游龙148秒</h3>
+          <p>桌别林小时候最爱看</p>
+        </div>
+      </a>
+
+      <a class="work-card" href="https://www.bilibili.com/video/BV15m411r7wn" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 最燃瓦罗兰特集锦">
+        <div class="work-media">
+          <img src="img/clip3.webp" alt="全网最燃的瓦罗兰特集锦视频封面" width="640" height="418" loading="lazy" decoding="async">
+        </div>
+        <div class="work-body">
+          <h3>最燃瓦罗兰特集锦</h3>
+          <p>看哭3亿原能者</p>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -748,29 +830,6 @@
         </div>
       </div>
 
-      <div class="card-col">
-        <a class="anime-card" href="https://www.bilibili.com/video/BV1SoxdeaEAp" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip1.webp" alt="Novocaine 2 视频封面" width="640" height="400" loading="lazy" decoding="async">
-          <div class="anime-body">
-            <h3>Novocaine 2</h3>
-            <p>区</p>
-          </div>
-        </a>
-        <a class="anime-card" href="https://www.bilibili.com/video/BV1nQjU6SE2k" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip2.webp" alt="霓虹町游龙148秒视频封面" width="640" height="360" loading="lazy" decoding="async">
-          <div class="anime-body">
-            <h3>霓虹町游龙148秒</h3>
-            <p>桌别林小时候最爱看</p>
-          </div>
-        </a>
-        <a class="anime-card" href="https://www.bilibili.com/video/BV15m411r7wn" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip3.webp" alt="全网最燃的瓦罗兰特集锦视频封面" width="640" height="418" loading="lazy" decoding="async">
-          <div class="anime-body">
-            <h3>最燃瓦罗兰特集锦</h3>
-            <p>看哭3亿原能者</p>
-          </div>
-        </a>
-      </div>
     </div>
 
     <div class="other-block">
@@ -882,7 +941,7 @@
 
   // 滚动渐显：区块进入视口时淡入
   const revealEls = document.querySelectorAll(
-    '.section-head, .about-grid, .skills-row, .contact-grid, .under-grid, .other-block, .tag-cloud'
+    '.section-head, .about-grid, .works-grid, .skills-row, .contact-grid, .under-grid, .other-block, .tag-cloud'
   );
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
