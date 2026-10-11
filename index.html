@@ -538,6 +538,344 @@
     transition: opacity .7s ease, transform .7s ease;
   }
   .reveal.visible { opacity: 1; transform: none; }
+
+/* ---------- M8 editing-room visual system ---------- */
+:root {
+  --ui-bg: #f2f3f6;
+  --ui-surface: #ffffff;
+  --ui-panel: #17191f;
+  --ui-panel-2: #22252d;
+  --ui-ink: #1b1d23;
+  --ui-muted: #626672;
+  --ui-line: #d8dae1;
+  --ui-line-dark: #363a44;
+  --ui-purple: #7657d6;
+  --ui-red: #ff4655;
+  --ui-cyan: #32bfe3;
+  --ui-yellow: #ffd166;
+  --card: var(--ui-surface);
+  --radius: 8px;
+}
+[data-theme="dark"] {
+  --ui-bg: #101116;
+  --ui-surface: #191b21;
+  --ui-panel: #0b0c10;
+  --ui-panel-2: #22252d;
+  --ui-ink: #f2f3f6;
+  --ui-muted: #aeb2bd;
+  --ui-line: #30333c;
+  --ui-line-dark: #363a44;
+  --ui-purple: #a68cff;
+  --ui-red: #ff5c69;
+  --ui-cyan: #58d7f2;
+  --ui-yellow: #ffd166;
+  --card: var(--ui-surface);
+}
+body * { letter-spacing: 0; }
+body {
+  background: var(--ui-bg);
+  color: var(--ui-ink);
+}
+h1, h2, h3, p, a, button { letter-spacing: 0; }
+
+nav {
+  background: rgba(255, 255, 255, .9);
+  border-bottom: 1px solid var(--ui-line);
+}
+[data-theme="dark"] nav { background: rgba(16, 17, 22, .92); }
+.logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: none; color: var(--ui-ink);
+}
+.logo::before { content: none; }
+.brand-mark {
+  width: 38px; height: 38px; display: inline-flex;
+  align-items: center; justify-content: center;
+  border: 1px solid var(--ui-ink); border-radius: 6px;
+  background: var(--ui-ink); color: var(--ui-bg);
+  font-size: .82rem; font-weight: 800;
+}
+.brand-name { font-size: 1.05rem; }
+.nav-links a {
+  border-radius: 6px;
+  border-color: var(--ui-line);
+  background: transparent;
+  color: var(--ui-muted);
+}
+.nav-links a:hover,
+.nav-links .page-tab.active {
+  background: var(--ui-ink); color: var(--ui-bg); border-color: var(--ui-ink);
+  box-shadow: none; transform: none;
+}
+.theme-toggle {
+  width: 42px; height: 42px; padding: 0;
+  border: 1px solid var(--ui-line); border-radius: 6px;
+  color: var(--ui-ink);
+}
+.theme-toggle:hover { background: var(--ui-line); transform: none; }
+
+.story-timeline {
+  position: fixed; left: 18px; top: 50%;
+  transform: translateY(-50%);
+  width: 112px; z-index: 90;
+}
+.timeline-track {
+  position: absolute; left: 7px; top: 10px; bottom: 10px;
+  width: 2px; background: var(--ui-line);
+}
+.timeline-progress {
+  width: 100%; height: var(--scroll-progress, 0%);
+  background: var(--ui-cyan);
+}
+.timeline-list { list-style: none; position: relative; display: grid; gap: 22px; }
+.timeline-link {
+  display: grid; grid-template-columns: 16px 1fr; gap: 9px;
+  align-items: center; color: var(--ui-muted);
+  text-decoration: none; font-size: .72rem;
+}
+.timeline-link::before {
+  content: ""; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ui-bg); border: 2px solid var(--ui-line);
+}
+.timeline-link span { grid-column: 2; font-variant-numeric: tabular-nums; }
+.timeline-link strong { grid-column: 2; font-size: .82rem; }
+.timeline-link.active { color: var(--ui-ink); }
+.timeline-link.active::before { background: var(--ui-red); border-color: var(--ui-red); }
+
+.hero {
+  min-height: 86vh;
+  padding: 82px 24px 36px;
+  background: var(--ui-panel);
+  justify-content: center;
+}
+.monitor-frame {
+  width: min(1080px, 100%);
+  aspect-ratio: 16 / 8.4;
+  min-height: 520px;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ui-line-dark); border-radius: 8px;
+  background: var(--ui-panel-2);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .28);
+}
+.monitor-bar, .monitor-controls {
+  min-height: 42px; padding: 0 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; color: #c7cad3;
+  font-size: .72rem; font-variant-numeric: tabular-nums;
+}
+.monitor-bar { border-bottom: 1px solid var(--ui-line-dark); }
+.monitor-controls { border-top: 1px solid var(--ui-line-dark); }
+.monitor-brand { display: inline-flex; align-items: center; gap: 8px; }
+.monitor-brand i {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ui-red); box-shadow: 0 0 0 3px rgba(255, 70, 85, .14);
+}
+.monitor-timecode { color: var(--ui-cyan); }
+.monitor-screen {
+  position: relative; flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 38px 24px; text-align: center; color: #fff;
+  background: var(--ui-panel);
+}
+.monitor-screen::before {
+  content: "PREVIEW / M8RAGE";
+  position: absolute; top: 14px; left: 16px;
+  color: #838895; font-size: .7rem;
+}
+.monitor-screen::after {
+  content: "SAFE AREA";
+  position: absolute; right: 16px; bottom: 14px;
+  color: #838895; font-size: .7rem;
+}
+.hero .avatar {
+  width: 104px; height: 104px;
+  border: 2px solid rgba(255, 255, 255, .4);
+  margin-bottom: 18px;
+}
+.hero h1 { color: #fff; font-size: clamp(2.15rem, 5vw, 3.35rem); }
+.hero .tagline { color: rgba(255, 255, 255, .72); margin-top: 8px; }
+.hero .divider { background: var(--ui-cyan); margin: 18px auto; }
+.hero .intro { color: rgba(255, 255, 255, .9); font-size: 1.08rem; }
+.hero .cta { margin-top: 24px; gap: 12px; }
+.monitor-controls .record-state { color: var(--ui-red); display: inline-flex; align-items: center; gap: 7px; }
+.record-state i { width: 8px; height: 8px; border-radius: 50%; background: var(--ui-red); }
+.monitor-scrubber {
+  flex: 1; max-width: 380px; height: 3px;
+  background: #3d414b; position: relative;
+}
+.monitor-scrubber i {
+  position: absolute; inset: 0 auto 0 0; width: 28%;
+  background: var(--ui-cyan);
+}
+
+.btn {
+  border-radius: 6px;
+  min-height: 44px; display: inline-flex;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.btn-primary { background: var(--ui-purple); color: #fff; }
+.btn-primary:hover { background: #6848c8; box-shadow: none; }
+.btn-ghost {
+  border: 1px solid rgba(255, 255, 255, .32);
+  background: transparent; color: #fff;
+}
+.btn-ghost:hover { border-color: var(--ui-cyan); background: rgba(50, 191, 227, .12); box-shadow: none; }
+
+.section-head { margin-bottom: 42px; }
+.section-head .eyebrow {
+  color: var(--ui-red); font-size: .76rem; font-weight: 800;
+  text-transform: uppercase;
+}
+.section-head h2 { color: var(--ui-ink); font-size: clamp(1.9rem, 4vw, 2.65rem); }
+.section-head p, .about-text p, .highlight-list li, .skill-body p,
+.work-body p, .contact-card p, .media-body p, .director-note li {
+  color: var(--ui-muted);
+}
+.about-card, .skill-card, .contact-card, .work-clip, .media-item {
+  border: 1px solid var(--ui-line);
+  border-radius: 8px; box-shadow: none;
+}
+.about-card::before, .intro-modal-box::before { background: var(--ui-cyan); }
+.about-card .meta li, .skill-card .skill-img, .media-item .media-poster {
+  border-color: var(--ui-line);
+}
+.skill-card .skill-img, .work-media {
+  background: var(--ui-bg);
+}
+.skill-img img { width: 54px; height: 54px; }
+.skill-body h3, .about-text h3, .contact-card h3,
+.work-body h3, .media-body h3, .director-note h3, .about-card h3 {
+  color: var(--ui-ink);
+}
+.about-card .role, .about-card .meta li span:first-child { color: var(--ui-muted); }
+.about-card .meta li span:last-child { color: var(--ui-ink); }
+
+.works-track {
+  position: relative;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.works-track::before {
+  content: ""; position: absolute; top: 14px; left: 5%; right: 5%;
+  height: 2px; background: var(--ui-cyan);
+}
+.work-clip { position: relative; padding-top: 38px; overflow: visible; }
+.work-clip::before {
+  content: attr(data-index);
+  position: absolute; top: 0; left: 18px;
+  min-width: 32px; height: 28px; padding: 0 7px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 5px; background: var(--ui-ink); color: var(--ui-bg);
+  font-size: .72rem; font-weight: 800; z-index: 2;
+}
+.work-clip:nth-child(2)::before { background: var(--ui-red); color: #fff; }
+.work-clip:nth-child(3)::before { background: var(--ui-yellow); color: #242424; }
+.work-clip:hover { border-color: var(--ui-cyan); box-shadow: none; }
+.clip-meta {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 12px 14px; color: var(--ui-muted);
+  border-bottom: 1px solid var(--ui-line);
+  font-size: .72rem; font-weight: 700;
+}
+.work-media {
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid var(--ui-line);
+}
+.work-card:hover .work-media img, .work-clip:hover .work-media img { transform: scale(1.035); }
+.work-body { padding: 18px 18px 22px; }
+
+.tag {
+  border-radius: 5px; border-color: var(--ui-line);
+  background: var(--ui-surface); color: var(--ui-muted);
+}
+.tag:hover { background: var(--ui-red); color: #fff; border-color: var(--ui-red); transform: none; }
+
+.contact-card .icon {
+  border-radius: 6px;
+  background: var(--ui-bg); color: var(--ui-purple);
+  border: 1px solid var(--ui-line);
+}
+.contact-card:hover, .skill-card:hover, .media-item:hover {
+  transform: none; box-shadow: none; border-color: var(--ui-cyan);
+}
+
+.media-sheet {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, auto);
+  gap: 18px;
+}
+.media-item {
+  min-height: 132px;
+  background: var(--ui-surface);
+}
+.media-item .media-poster {
+  width: 106px; min-width: 106px; height: 100%; min-height: 132px;
+  border-right: 1px solid var(--ui-line);
+  object-position: center top;
+}
+.media-body { padding: 16px 18px; }
+.media-types .contact-card:nth-child(1) .icon { color: var(--ui-red); }
+.media-types .contact-card:nth-child(2) .icon { color: var(--ui-cyan); }
+.media-types .contact-card:nth-child(3) .icon { color: var(--ui-yellow); }
+
+.director-note {
+  max-width: 720px; margin: 42px auto 0;
+  padding: 22px 26px; border-left: 3px solid var(--ui-yellow);
+  background: var(--ui-surface); border-radius: 0 8px 8px 0;
+}
+.director-note h3 { text-align: left; margin-bottom: 8px; }
+
+.intro-modal-box {
+  border-radius: 8px;
+  background: var(--ui-surface); color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+}
+.intro-modal-box h2 { color: var(--ui-ink); }
+.intro-modal-box .modal-sub, .modal-text { color: var(--ui-muted); }
+
+footer {
+  background: var(--ui-panel); color: #b9bdc8;
+}
+.loader { background: var(--ui-panel); }
+.loader-text { color: rgba(255, 255, 255, .75); }
+
+@media (max-width: 1100px) {
+  .story-timeline {
+    top: 64px; left: 12px; right: 12px; bottom: auto;
+    transform: none; width: auto;
+    padding: 10px 12px;
+    border: 1px solid var(--ui-line); border-radius: 8px;
+    background: var(--ui-surface);
+  }
+  .timeline-track { left: 18px; right: 18px; top: 12px; bottom: auto; width: auto; height: 2px; }
+  .timeline-progress { width: var(--scroll-progress, 0%); height: 100%; }
+  .timeline-list { display: flex; justify-content: space-between; gap: 10px; }
+  .timeline-link { grid-template-columns: 12px 1fr; gap: 6px; }
+  .timeline-link strong { display: none; }
+}
+@media (max-width: 900px) {
+  .works-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  .hero { min-height: auto; padding: 132px 16px 34px; }
+  .monitor-frame { aspect-ratio: auto; min-height: 540px; }
+  .monitor-screen { padding: 42px 18px; }
+  .monitor-timecode { display: none; }
+  .monitor-controls span:last-child { display: none; }
+  .media-sheet { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
+}
+@media (max-width: 600px) {
+  .works-track { grid-template-columns: 1fr; gap: 18px; }
+  .works-track::before { display: none; }
+  .timeline-list { gap: 4px; }
+  .timeline-link span { font-size: .65rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
+}
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
@@ -575,36 +913,53 @@
 </div>
 
 <nav id="nav" aria-label="主导航">
-  <a class="logo" id="homeLink" href="#test1" aria-label="返回首页">M8Rage</a>
+  <a class="logo" id="homeLink" href="#test1" aria-label="返回首页"><span class="brand-mark" aria-hidden="true">M8</span><span class="brand-name">M8Rage</span></a>
   <ul class="nav-links">
     <li><a href="#test1" class="page-tab active" data-page="test1" aria-current="page">首页</a></li>
-    <li><a href="#test2" class="page-tab" data-page="test2">其他</a></li>
-    <li><button class="theme-toggle" id="themeToggle" type="button" title="切换暗色模式" aria-label="切换到暗色模式" aria-pressed="false">🌙</button></li>
+    <li><a href="#test2" class="page-tab" data-page="test2">素材箱</a></li>
+    <li><button class="theme-toggle" id="themeToggle" type="button" title="切换暗色模式" aria-label="切换到暗色模式" aria-pressed="false">☾</button></li>
   </ul>
 </nav>
 
+<aside class="story-timeline" id="storyTimeline" aria-label="页面时间线">
+  <div class="timeline-track" aria-hidden="true"><div class="timeline-progress"></div></div>
+  <ol class="timeline-list">
+    <li><a class="timeline-link active" href="#home" data-timeline="home" aria-current="step"><span>00:00</span><strong>开场</strong></a></li>
+    <li><a class="timeline-link" href="#about" data-timeline="about"><span>00:12</span><strong>关于</strong></a></li>
+    <li><a class="timeline-link" href="#works" data-timeline="works"><span>00:28</span><strong>剪辑</strong></a></li>
+    <li><a class="timeline-link" href="#skills" data-timeline="skills"><span>00:46</span><strong>技能</strong></a></li>
+    <li><a class="timeline-link" href="#contact" data-timeline="contact"><span>01:03</span><strong>联系</strong></a></li>
+  </ol>
+</aside>
+
 <main id="main-content">
 <header class="hero" id="home">
-  <span class="crystal" aria-hidden="true" style="top:16%; left:12%; font-size:2.4rem;">✦</span>
-  <span class="crystal" aria-hidden="true" style="top:24%; right:16%; font-size:1.8rem; animation-delay:1.2s;">✧</span>
-  <span class="crystal" aria-hidden="true" style="bottom:22%; left:20%; font-size:1.6rem; animation-delay:2s;">❄</span>
-  <span class="crystal" aria-hidden="true" style="bottom:16%; right:14%; font-size:2.2rem; animation-delay:.6s;">✦</span>
-  <span class="crystal" aria-hidden="true" style="top:12%; left:46%; font-size:1.2rem; animation-delay:1.8s;">✧</span>
+  <div class="monitor-frame">
+    <div class="monitor-bar">
+      <span class="monitor-brand"><i aria-hidden="true"></i> M8RAGE // PROGRAM</span>
+      <span class="monitor-timecode">00:00:01:12</span>
+    </div>
 
-  <img class="avatar" src="img/emt.jpg" alt="M8Rage 的头像" width="256" height="256" fetchpriority="high" decoding="async">
-  <h1>M8Rage</h1>
-  <p class="tagline">吴昂霖</p>
-  <div class="divider"></div>
-  <p class="intro">
-    I Do Things for Fun.
-  </p>
-  <div class="cta">
-    <a class="btn btn-primary" href="#about">关于我</a>
-    <a class="btn btn-ghost" href="#works">我的剪辑</a>
-    <a class="btn btn-ghost" href="#skills">我的特长</a>
-    <a class="btn btn-ghost" href="#contact">联系我</a>
+    <div class="monitor-screen">
+      <img class="avatar" src="img/emt.jpg" alt="M8Rage 的头像" width="256" height="256" fetchpriority="high" decoding="async">
+      <h1>M8Rage</h1>
+      <p class="tagline">吴昂霖</p>
+      <div class="divider"></div>
+      <p class="intro">I Do Things for Fun.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#works"><span aria-hidden="true">▶</span> 播放作品</a>
+        <a class="btn btn-ghost" href="#about">关于我</a>
+        <a class="btn btn-ghost" href="#skills">我的特长</a>
+        <a class="btn btn-ghost" href="#contact">联系我</a>
+      </div>
+    </div>
+
+    <div class="monitor-controls" aria-hidden="true">
+      <span class="record-state"><i></i> REC</span>
+      <span class="monitor-scrubber"><i></i></span>
+      <span>16:9 / 1080P</span>
+    </div>
   </div>
-
 </header>
 
 <section id="about">
@@ -632,15 +987,15 @@
         <h3>嗨，很高兴认识你 </h3>
         <p>
           我从诸暨某不知名乡镇高中毕业，参加过一些可能没什么含金量的中
-          小学生信息素养提升实践活动，获得过2次省2和多次市1。
+          小学生信息素养提升实践活动，获得过2次省二和多次市一。
         </p>
         <p>
-          对AI了解很少只停留在中考时候用chatgpt糊弄作文提纲，近两年用豆包千问等等乱问问题
-          没有做过什么实际的项目。
+          刚进入大学时的对AI了解的只停留在中考时候用chatgpt糊弄作文提纲，近两年用豆包千问
+          等等乱问问题没有做过什么实际的项目，现在学会用DS什么的做一些基本的东西。
         </p>
         <ul class="highlight-list">
           <li>就是I Do Things for Fun.</li>
-          <li>正在学习AI中。。</li>
+          <li>正在学习AI使用与vibe coding</li>
           <li>非常的随便</li>
         </ul>
       </div>
@@ -651,12 +1006,13 @@
 <section id="works">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Works</span>
+      <span class="eyebrow">Timeline / Works</span>
       <h2>我的剪辑</h2>
     </div>
 
-    <div class="works-grid">
-      <a class="work-card" href="https://www.bilibili.com/video/BV1SoxdeaEAp" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 Novocaine 2">
+    <div class="works-track">
+      <a class="work-clip" data-index="01" href="https://www.bilibili.com/video/BV1SoxdeaEAp" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 Novocaine 2">
+        <div class="clip-meta"><span>CLIP 01</span><span>BILIBILI</span></div>
         <div class="work-media">
           <img src="img/clip1.webp" alt="Novocaine 2 视频封面" width="640" height="400" loading="lazy" decoding="async">
         </div>
@@ -666,7 +1022,8 @@
         </div>
       </a>
 
-      <a class="work-card" href="https://www.bilibili.com/video/BV1nQjU6SE2k" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 霓虹町游龙148秒">
+      <a class="work-clip" data-index="02" href="https://www.bilibili.com/video/BV1nQjU6SE2k" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 霓虹町游龙148秒">
+        <div class="clip-meta"><span>CLIP 02</span><span>BILIBILI</span></div>
         <div class="work-media">
           <img src="img/clip2.webp" alt="霓虹町游龙148秒视频封面" width="640" height="360" loading="lazy" decoding="async">
         </div>
@@ -676,7 +1033,8 @@
         </div>
       </a>
 
-      <a class="work-card" href="https://www.bilibili.com/video/BV15m411r7wn" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 最燃瓦罗兰特集锦">
+      <a class="work-clip" data-index="03" href="https://www.bilibili.com/video/BV15m411r7wn" target="_blank" rel="noopener" aria-label="在 Bilibili 打开 最燃瓦罗兰特集锦">
+        <div class="clip-meta"><span>CLIP 03</span><span>BILIBILI</span></div>
         <div class="work-media">
           <img src="img/clip3.webp" alt="全网最燃的瓦罗兰特集锦视频封面" width="640" height="418" loading="lazy" decoding="async">
         </div>
@@ -704,7 +1062,7 @@
       </div>
       <div class="skill-card">
         <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑" width="32" height="32" loading="lazy" decoding="async"></div>
-        <div class="skill-body"><h3>视频剪辑</h3><p>可以断章取义。</p></div>
+        <div class="skill-body"><h3>视频剪辑</h3><p>可以进行基本的断章取义。</p></div>
       </div>
       <div class="skill-card">
         <div class="skill-img"><img src="img/wiggleworm.png" alt="编程" width="32" height="32" loading="lazy" decoding="async"></div>
@@ -758,12 +1116,12 @@
 <section id="test2" class="page" data-page="test2">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Other</span>
-      <h2>其他</h2>
+      <span class="eyebrow">Media Bin</span>
+      <h2>素材箱</h2>
       <p>是不是有点太隐私了。</p>
     </div>
 
-    <div class="contact-grid">
+    <div class="contact-grid media-types">
       <div class="contact-card">
         <div class="icon">🎬</div>
         <h3>番剧</h3>
@@ -781,49 +1139,49 @@
       </div>
     </div>
 
-    <div class="under-grid">
-      <div class="card-col">
-        <div class="anime-card">
-          <img class="poster" src="img/emilia.webp" alt="爱蜜莉雅" width="230" height="345" loading="lazy" decoding="async">
-          <div class="anime-body">
+    <div class="media-sheet">
+      <div class="media-column">
+        <div class="media-item">
+          <img class="media-poster" src="img/emilia.webp" alt="爱蜜莉雅" width="230" height="345" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>Re:0</h3>
             <p>圆头耄耋和哈基蜜</p>
           </div>
         </div>
-        <div class="anime-card">
-          <img class="poster" src="img/roxy.webp" alt="洛琪希" width="230" height="345" loading="lazy" decoding="async">
-          <div class="anime-body">
+        <div class="media-item">
+          <img class="media-poster" src="img/roxy.webp" alt="洛琪希" width="230" height="345" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>无职转生</h3>
             <p>蕾忍最爱的神秘番剧</p>
           </div>
         </div>
-        <div class="anime-card">
-          <img class="poster" src="img/yui.webp" alt="由比滨结衣" width="230" height="345" loading="lazy" decoding="async">
-          <div class="anime-body">
+        <div class="media-item">
+          <img class="media-poster" src="img/yui.webp" alt="由比滨结衣" width="230" height="345" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>春物</h3>
             <p>大老师是对的，团子也是对的</p>
           </div>
         </div>
       </div>
 
-      <div class="card-col">
-        <div class="anime-card">
-          <img class="poster" src="img/tarkov.webp" alt="逃离塔科夫" width="480" height="610" loading="lazy" decoding="async">
-          <div class="anime-body">
+      <div class="media-column">
+        <div class="media-item">
+          <img class="media-poster" src="img/tarkov.webp" alt="逃离塔科夫" width="480" height="610" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>逃离塔科夫</h3>
             <p>斯拉夫这个大牢</p>
           </div>
         </div>
-        <div class="anime-card">
-          <img class="poster" src="img/isaac.webp" alt="以撒的结合" width="300" height="450" loading="lazy" decoding="async">
-          <div class="anime-body">
+        <div class="media-item">
+          <img class="media-poster" src="img/isaac.webp" alt="以撒的结合" width="300" height="450" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>以撒的结合</h3>
             <p>猎奇运营是最猎奇的运营</p>
           </div>
         </div>
-        <div class="anime-card">
-          <img class="poster" src="img/valorant-logo.svg" alt="无畏契约标志" width="512" height="512" loading="lazy" decoding="async">
-          <div class="anime-body">
+        <div class="media-item">
+          <img class="media-poster" src="img/valorant-logo.svg" alt="无畏契约标志" width="512" height="512" loading="lazy" decoding="async">
+          <div class="media-body">
             <h3>无畏契约</h3>
             <p>瓦学弟闹麻了</p>
           </div>
@@ -832,8 +1190,8 @@
 
     </div>
 
-    <div class="other-block">
-      <h3>ISFP一只</h3>
+    <div class="director-note">
+      <h3>导演笔记</h3>
       <ul class="highlight-list">
         <li>总之还活着</li>
         <li>特别鸣谢:</li>
@@ -875,6 +1233,7 @@
       else t.removeAttribute('aria-current');
     });
     document.getElementById('skipLink').href = isTest2 ? '#test2' : '#main-content';
+    document.getElementById('storyTimeline').hidden = isTest2;
     const root = document.documentElement;
     root.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
@@ -889,12 +1248,38 @@
   // logo 回到首页(TEST1)顶部
   document.getElementById('homeLink').addEventListener('click', e => {
     e.preventDefault();
-    showPage('test1', false);
+    showPage('test1');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // 根据地址栏 hash 显示初始页面
   showPage(location.hash === '#test2' ? 'test2' : 'test1', false);
+
+  // 滚动时间线与播放头
+  const storyTimeline = document.getElementById('storyTimeline');
+  const timelineLinks = [...document.querySelectorAll('.timeline-link')];
+  const timelineSections = timelineLinks
+    .map(link => document.getElementById(link.dataset.timeline))
+    .filter(Boolean);
+  function updateStoryTimeline() {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? Math.min(100, Math.max(0, scrollY / maxScroll * 100)) : 0;
+    storyTimeline.style.setProperty('--scroll-progress', progress + '%');
+    const markerY = scrollY + window.innerHeight * .36;
+    let activeId = timelineSections[0]?.id;
+    timelineSections.forEach(section => {
+      if (section.offsetTop <= markerY) activeId = section.id;
+    });
+    timelineLinks.forEach(link => {
+      const active = link.dataset.timeline === activeId;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'step');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  addEventListener('scroll', updateStoryTimeline, { passive: true });
+  addEventListener('resize', updateStoryTimeline);
+  updateStoryTimeline();
 
   // 暗色模式切换
   const themeToggle = document.getElementById('themeToggle');
@@ -902,7 +1287,7 @@
   function setTheme(theme) {
     const isDark = theme === 'dark';
     html.dataset.theme = isDark ? 'dark' : '';
-    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    themeToggle.textContent = isDark ? '☀' : '☾';
     themeToggle.setAttribute('aria-label', isDark ? '切换到浅色模式' : '切换到暗色模式');
     themeToggle.setAttribute('aria-pressed', String(isDark));
   }
@@ -941,7 +1326,7 @@
 
   // 滚动渐显：区块进入视口时淡入
   const revealEls = document.querySelectorAll(
-    '.section-head, .about-grid, .works-grid, .skills-row, .contact-grid, .under-grid, .other-block, .tag-cloud'
+    '.section-head, .about-grid, .works-track, .skills-row, .contact-grid, .media-sheet, .director-note, .tag-cloud'
   );
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
