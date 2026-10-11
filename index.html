@@ -4,10 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>M8Rage · 个人介绍</title>
-<meta name="description" content=""/>
-<meta property="og:title" content="M8Rage · 个人介绍" />
-<meta property="og:description" content="I Do Things for Fun." />
-<meta property="og:type" content="website" />
+<meta name="description" content="M8Rage 的个人介绍页：智能科学学生，正在学习 AI 与编程，也热爱视频剪辑与游戏。">
+<meta name="author" content="M8Rage">
+<meta name="theme-color" content="#6b5b95">
+<meta property="og:title" content="M8Rage · 个人介绍">
+<meta property="og:description" content="智能科学学生，正在学习 AI 与编程，也热爱视频剪辑与游戏。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://m8rag3.github.io/intro/">
+<meta property="og:image" content="https://m8rag3.github.io/intro/img/social-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="M8Rage 个人介绍">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="M8Rage · 个人介绍">
+<meta name="twitter:description" content="智能科学学生，正在学习 AI 与编程，也热爱视频剪辑与游戏。">
+<meta name="twitter:image" content="https://m8rag3.github.io/intro/img/social-preview.jpg">
+<link rel="canonical" href="https://m8rag3.github.io/intro/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%236b5b95'/%3E%3Ctext x='50' y='70' font-size='56' text-anchor='middle' fill='%23ffffff'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
 <style>
   :root {
@@ -128,6 +140,21 @@
     background: rgba(255,255,255,.2);
     transform: scale(1.1);
   }
+
+  :focus-visible {
+    outline: 3px solid var(--ice-deep);
+    outline-offset: 3px;
+  }
+
+  .skip-link {
+    position: fixed; top: 12px; left: 12px; z-index: 10000;
+    padding: 10px 16px; border-radius: 10px;
+    background: var(--purple-900); color: #fff;
+    text-decoration: none; font-weight: 700;
+    transform: translateY(-160%);
+    transition: transform .2s ease;
+  }
+  .skip-link:focus { transform: translateY(0); }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -343,7 +370,7 @@
   }
   .anime-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
   .anime-card .poster {
-    width: 108px; min-width: 108px; height: auto; display: block;
+    width: 108px; min-width: 108px; height: 100%; min-height: 132px; display: block;
     object-fit: cover; object-position: top center;
     background: linear-gradient(160deg, var(--purple-100), var(--ice));
     border-right: 1px dashed var(--purple-200);
@@ -472,52 +499,59 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
     .reveal { opacity: 1; transform: none; transition: none; }
   }
 </style>
 </head>
 <body class="modal-open">
+<a class="skip-link" id="skipLink" href="#main-content">跳到主要内容</a>
 
 <!-- ===== 加载动画 ===== -->
-<div class="loader" id="loader">
+<div class="loader" id="loader" role="status" aria-live="polite">
   <div class="loader-spinner"></div>
   <div class="loader-text">Loading...</div>
 </div>
 
 <!-- ===== 开场弹窗：点「确定」后关闭 ===== -->
-<div class="intro-modal" id="introModal">
+<div class="intro-modal" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introModalTitle" aria-describedby="introModalText">
   <div class="intro-modal-box">
-    <h2>好可怕，游戏变困难了！</h2>
+    <h2 id="introModalTitle">好可怕，游戏变困难了！</h2>
     <p class="modal-sub"></p>
 
-    <p class="modal-text">
+    <p class="modal-text" id="introModalText">
       这个自我介绍网站由5%的我和95%的ai完成，谢谢肥鱼老师和雷总开源（？）
     </p>
 
-    <img class="modal-img" src="img/isacc.png" alt="isacc">
+    <img class="modal-img" src="img/isacc.png" alt="像素风游戏人物插画" width="262" height="175" decoding="async">
 
-    <button class="btn btn-primary" id="introConfirm" type="button">确定</button>
+    <button class="btn btn-primary" id="introConfirm" type="button" autofocus>确定</button>
   </div>
 </div>
 
-<nav id="nav">
-  <span class="logo" id="homeLink" title="回到首页">M8Rage</span>
+<nav id="nav" aria-label="主导航">
+  <a class="logo" id="homeLink" href="#test1" aria-label="返回首页">M8Rage</a>
   <ul class="nav-links">
-    <li><a href="#test1" class="page-tab active" data-page="test1">首页</a></li>
+    <li><a href="#test1" class="page-tab active" data-page="test1" aria-current="page">首页</a></li>
     <li><a href="#test2" class="page-tab" data-page="test2">其他</a></li>
-    <li><button class="theme-toggle" id="themeToggle" title="切换暗色模式">🌙</button></li>
+    <li><button class="theme-toggle" id="themeToggle" type="button" title="切换暗色模式" aria-label="切换到暗色模式" aria-pressed="false">🌙</button></li>
   </ul>
 </nav>
 
-<div id="site">
+<main id="main-content">
 <header class="hero" id="home">
-  <span class="crystal" style="top:16%; left:12%; font-size:2.4rem;">✦</span>
-  <span class="crystal" style="top:24%; right:16%; font-size:1.8rem; animation-delay:1.2s;">✧</span>
-  <span class="crystal" style="bottom:22%; left:20%; font-size:1.6rem; animation-delay:2s;">❄</span>
-  <span class="crystal" style="bottom:16%; right:14%; font-size:2.2rem; animation-delay:.6s;">✦</span>
-  <span class="crystal" style="top:12%; left:46%; font-size:1.2rem; animation-delay:1.8s;">✧</span>
+  <span class="crystal" aria-hidden="true" style="top:16%; left:12%; font-size:2.4rem;">✦</span>
+  <span class="crystal" aria-hidden="true" style="top:24%; right:16%; font-size:1.8rem; animation-delay:1.2s;">✧</span>
+  <span class="crystal" aria-hidden="true" style="bottom:22%; left:20%; font-size:1.6rem; animation-delay:2s;">❄</span>
+  <span class="crystal" aria-hidden="true" style="bottom:16%; right:14%; font-size:2.2rem; animation-delay:.6s;">✦</span>
+  <span class="crystal" aria-hidden="true" style="top:12%; left:46%; font-size:1.2rem; animation-delay:1.8s;">✧</span>
 
-  <img class="avatar" src="img/emt.jpg" alt="M8Rage">
+  <img class="avatar" src="img/emt.jpg" alt="M8Rage 的头像" width="256" height="256" fetchpriority="high" decoding="async">
   <h1>M8Rage</h1>
   <p class="tagline">吴昂霖</p>
   <div class="divider"></div>
@@ -542,7 +576,7 @@
 
     <div class="about-grid">
       <aside class="about-card">
-        <img class="avatar-lg" src="img/emt.jpg" alt="M8Rage">
+        <img class="avatar-lg" src="img/emt.jpg" alt="M8Rage 的头像" width="256" height="256" loading="lazy" decoding="async">
         <h3>M8Rage</h3>
         <p class="role">学生</p>
         <ul class="meta">
@@ -583,19 +617,19 @@
 
     <div class="skills-row">
       <div class="skill-card">
-        <div class="skill-img"><img src="img/salvation.png" alt="摸鱼"></div>
+        <div class="skill-img"><img src="img/salvation.png" alt="摸鱼" width="32" height="32" loading="lazy" decoding="async"></div>
         <div class="skill-body"><h3>摸鱼</h3><p>爽摸。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑"></div>
+        <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑" width="32" height="32" loading="lazy" decoding="async"></div>
         <div class="skill-body"><h3>视频剪辑</h3><p>可以断章取义。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/wiggleworm.png" alt="编程"></div>
+        <div class="skill-img"><img src="img/wiggleworm.png" alt="编程" width="32" height="32" loading="lazy" decoding="async"></div>
         <div class="skill-body"><h3>编程</h3><p>选的技术，会写helloworld。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/portablesolts.png" alt="AI"></div>
+        <div class="skill-img"><img src="img/portablesolts.png" alt="AI" width="32" height="32" loading="lazy" decoding="async"></div>
         <div class="skill-body"><h3>AI</h3><p>谢谢你大肥鱼和雷总的MIMO</p></div>
       </div>
     </div>
@@ -637,7 +671,7 @@
     </div>
   </div>
 </section>
-</div>
+</main>
 
 <section id="test2" class="page" data-page="test2">
   <div class="container">
@@ -668,21 +702,21 @@
     <div class="under-grid">
       <div class="card-col">
         <div class="anime-card">
-          <img class="poster" src="img/emilia.jpg" alt="爱蜜莉雅">
+          <img class="poster" src="img/emilia.webp" alt="爱蜜莉雅" width="230" height="345" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>Re:0</h3>
             <p>圆头耄耋和哈基蜜</p>
           </div>
         </div>
         <div class="anime-card">
-          <img class="poster" src="img/roxy.png" alt="洛琪希">
+          <img class="poster" src="img/roxy.webp" alt="洛琪希" width="230" height="345" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>无职转生</h3>
             <p>蕾忍最爱的神秘番剧</p>
           </div>
         </div>
         <div class="anime-card">
-          <img class="poster" src="img/yui.png" alt="由比滨结衣">
+          <img class="poster" src="img/yui.webp" alt="由比滨结衣" width="230" height="345" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>春物</h3>
             <p>大老师是对的，团子也是对的</p>
@@ -692,21 +726,21 @@
 
       <div class="card-col">
         <div class="anime-card">
-          <img class="poster" src="img/tarkov.jpg" alt="逃离塔科夫">
+          <img class="poster" src="img/tarkov.webp" alt="逃离塔科夫" width="480" height="610" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>逃离塔科夫</h3>
             <p>斯拉夫这个大牢</p>
           </div>
         </div>
         <div class="anime-card">
-          <img class="poster" src="img/isaac.jpg" alt="以撒的结合">
+          <img class="poster" src="img/isaac.webp" alt="以撒的结合" width="300" height="450" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>以撒的结合</h3>
             <p>猎奇运营是最猎奇的运营</p>
           </div>
         </div>
         <div class="anime-card">
-          <img class="poster" src="img/valorant-logo.svg" alt="无畏契约">
+          <img class="poster" src="img/valorant-logo.svg" alt="无畏契约标志" width="512" height="512" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>无畏契约</h3>
             <p>瓦学弟闹麻了</p>
@@ -716,21 +750,21 @@
 
       <div class="card-col">
         <a class="anime-card" href="https://www.bilibili.com/video/BV1SoxdeaEAp" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip1.jpg" alt="Novocaine 2">
+          <img class="poster" src="img/clip1.webp" alt="Novocaine 2 视频封面" width="640" height="400" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>Novocaine 2</h3>
             <p>区</p>
           </div>
         </a>
         <a class="anime-card" href="https://www.bilibili.com/video/BV1nQjU6SE2k" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip2.jpg" alt="霓虹町游龙148秒">
+          <img class="poster" src="img/clip2.webp" alt="霓虹町游龙148秒视频封面" width="640" height="360" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>霓虹町游龙148秒</h3>
             <p>桌别林小时候最爱看</p>
           </div>
         </a>
         <a class="anime-card" href="https://www.bilibili.com/video/BV15m411r7wn" target="_blank" rel="noopener">
-          <img class="poster" src="img/clip3.jpg" alt="全网最燃的瓦罗兰特集锦">
+          <img class="poster" src="img/clip3.webp" alt="全网最燃的瓦罗兰特集锦视频封面" width="640" height="418" loading="lazy" decoding="async">
           <div class="anime-body">
             <h3>最燃瓦罗兰特集锦</h3>
             <p>看哭3亿原能者</p>
@@ -768,14 +802,20 @@
   }, { passive: true });
 
   // TEST1(首页/主要内容) 与 TEST2(其他) 相互切换
-  const site = document.getElementById('site');
+  const site = document.getElementById('main-content');
   const test2 = document.getElementById('test2');
   const pageTabs = document.querySelectorAll('.page-tab');
   function showPage(id, updateHash = true) {
     const isTest2 = (id === 'test2');
     site.classList.toggle('hidden', isTest2);
     test2.classList.toggle('active', isTest2);
-    pageTabs.forEach(t => t.classList.toggle('active', t.dataset.page === id));
+    pageTabs.forEach(t => {
+      const active = t.dataset.page === id;
+      t.classList.toggle('active', active);
+      if (active) t.setAttribute('aria-current', 'page');
+      else t.removeAttribute('aria-current');
+    });
+    document.getElementById('skipLink').href = isTest2 ? '#test2' : '#main-content';
     const root = document.documentElement;
     root.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
@@ -800,27 +840,43 @@
   // 暗色模式切换
   const themeToggle = document.getElementById('themeToggle');
   const html = document.documentElement;
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) html.dataset.theme = savedTheme;
-  themeToggle.textContent = html.dataset.theme === 'dark' ? '☀️' : '🌙';
+  function setTheme(theme) {
+    const isDark = theme === 'dark';
+    html.dataset.theme = isDark ? 'dark' : '';
+    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', isDark ? '切换到浅色模式' : '切换到暗色模式');
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+  }
+  setTheme(localStorage.getItem('theme'));
   themeToggle.addEventListener('click', () => {
-    const isDark = html.dataset.theme === 'dark';
-    html.dataset.theme = isDark ? '' : 'dark';
-    themeToggle.textContent = isDark ? '🌙' : '☀️';
-    localStorage.setItem('theme', html.dataset.theme);
+    const nextTheme = html.dataset.theme === 'dark' ? '' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
   });
 
   // 开场弹窗：点击「确定」后关闭并解锁滚动；同一会话只弹一次
   const introModal = document.getElementById('introModal');
   const introConfirm = document.getElementById('introConfirm');
-  if (sessionStorage.getItem('introSeen')) {
+  function closeIntroModal() {
     introModal.classList.add('hidden');
     document.body.classList.remove('modal-open');
+    sessionStorage.setItem('introSeen', '1');
+  }
+  if (sessionStorage.getItem('introSeen')) {
+    closeIntroModal();
   } else if (introConfirm) {
-    introConfirm.addEventListener('click', () => {
-      introModal.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      sessionStorage.setItem('introSeen', '1');
+    introConfirm.addEventListener('click', closeIntroModal);
+    introConfirm.addEventListener('keydown', event => {
+      if (event.key === 'Escape' || event.key === 'Esc') closeIntroModal();
+    });
+    window.setTimeout(() => introConfirm.focus(), 350);
+    document.addEventListener('keydown', event => {
+      if (introModal.classList.contains('hidden')) return;
+      if (event.key === 'Escape') closeIntroModal();
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        introConfirm.focus();
+      }
     });
   }
 
