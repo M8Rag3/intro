@@ -802,20 +802,46 @@ nav {
 }
 
 .media-sheet {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(3, auto);
-  gap: 18px;
+  align-items: start;
+  gap: 22px;
 }
+.media-column {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto repeat(3, 162px);
+  align-content: start;
+  gap: 14px;
+}
+.media-column-title {
+  min-height: 34px;
+  display: flex; align-items: center;
+  color: var(--ui-muted);
+  font-size: .78rem; font-weight: 800;
+  border-bottom: 1px solid var(--ui-line);
+}
+.media-column:first-child .media-column-title { color: var(--ui-red); }
+.media-column:nth-child(2) .media-column-title { color: var(--ui-cyan); }
 .media-item {
-  min-height: 132px;
+  min-width: 0; height: 162px; min-height: 162px;
+  display: flex; align-items: stretch;
+  overflow: hidden;
   background: var(--ui-surface);
 }
 .media-item .media-poster {
-  width: 106px; min-width: 106px; height: 100%; min-height: 132px;
+  width: 108px; min-width: 108px; height: 100%; min-height: 132px;
+  display: block;
   border-right: 1px solid var(--ui-line);
+  object-fit: cover;
   object-position: center top;
 }
-.media-body { padding: 16px 18px; }
+.media-body {
+  min-width: 0; flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 16px 18px;
+}
+.media-body h3, .media-body p { overflow-wrap: anywhere; }
 .media-types .contact-card:nth-child(1) .icon { color: var(--ui-red); }
 .media-types .contact-card:nth-child(2) .icon { color: var(--ui-cyan); }
 .media-types .contact-card:nth-child(3) .icon { color: var(--ui-yellow); }
@@ -864,7 +890,7 @@ footer {
   .monitor-screen { padding: 42px 18px; }
   .monitor-timecode { display: none; }
   .monitor-controls span:last-child { display: none; }
-  .media-sheet { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; }
+  .media-sheet { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .works-track { grid-template-columns: 1fr; gap: 18px; }
@@ -1141,6 +1167,7 @@ footer {
 
     <div class="media-sheet">
       <div class="media-column">
+        <h3 class="media-column-title">番剧素材</h3>
         <div class="media-item">
           <img class="media-poster" src="img/emilia.webp" alt="爱蜜莉雅" width="230" height="345" loading="lazy" decoding="async">
           <div class="media-body">
@@ -1165,6 +1192,7 @@ footer {
       </div>
 
       <div class="media-column">
+        <h3 class="media-column-title">游戏素材</h3>
         <div class="media-item">
           <img class="media-poster" src="img/tarkov.webp" alt="逃离塔科夫" width="480" height="610" loading="lazy" decoding="async">
           <div class="media-body">
