@@ -42,8 +42,8 @@
     --radius:     18px;
     --shadow:     0 10px 30px rgba(74, 61, 104, 0.12);
     --shadow-lg:  0 20px 50px rgba(74, 61, 104, 0.18);
-    --grad-hero: linear-gradient(135deg, #3a2a5c 0%, #6b5b95 55%, #8e7cc3 100%);
-    --grad-accent: linear-gradient(135deg, #7d6fa0, #b9a8dd);
+    --grad-hero: var(--ui-panel);
+    --grad-accent: var(--ui-purple);
   }
 
   /* 暗色模式 */
@@ -65,8 +65,8 @@
     --card:       #2d1b4e;
     --shadow:     0 10px 30px rgba(0, 0, 0, 0.3);
     --shadow-lg:  0 20px 50px rgba(0, 0, 0, 0.4);
-    --grad-hero: linear-gradient(135deg, #1a1028 0%, #2d1b4e 55%, #4a3d68 100%);
-    --grad-accent: linear-gradient(135deg, #4a3d68, #6b5b95);
+    --grad-hero: var(--ui-panel);
+    --grad-accent: var(--ui-purple);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,13 +74,9 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
-                 -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-family: var(--font-body);
     color: var(--text);
-    background:
-      radial-gradient(1200px 600px at 85% -10%, var(--purple-100), transparent 60%),
-      radial-gradient(900px 500px at -10% 30%, var(--ice), transparent 55%),
-      var(--purple-50);
+    background: var(--ui-bg);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
@@ -104,9 +100,7 @@
 
   .logo {
     font-weight: 700; font-size: 1.15rem; letter-spacing: .02em;
-    background: var(--grad-accent);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent;
+      color: var(--ui-ink);
   }
   .logo::before { content: "✦ "; color: var(--purple-400); }
 
@@ -117,7 +111,7 @@
     padding: 8px 18px; border-radius: 999px;
     background: rgba(255,255,255,.65);
     border: 1px solid var(--purple-200);
-    transition: all .25s;
+    transition: background-color .2s, color .2s, border-color .2s, transform .2s;
   }
   .nav-links a:hover {
     background: var(--grad-accent); color: #fff;
@@ -133,7 +127,7 @@
   .theme-toggle {
     background: none; border: none; cursor: pointer;
     font-size: 1.2rem; padding: 8px 12px;
-    border-radius: 999px; transition: all .25s;
+    border-radius: 999px; transition: background-color .2s, color .2s, border-color .2s, transform .2s;
     line-height: 1;
   }
   .theme-toggle:hover {
@@ -147,7 +141,7 @@
   }
 
   .skip-link {
-    position: fixed; top: 12px; left: 12px; z-index: 10000;
+    position: fixed; top: 12px; left: 12px; z-index: 120;
     padding: 10px 16px; border-radius: 10px;
     background: var(--purple-900); color: #fff;
     text-decoration: none; font-weight: 700;
@@ -330,7 +324,7 @@
 
   /* ---------- 技能(并排竖向卡片) ---------- */
   .skills-row {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+    display: grid; grid-template-columns: 1.15fr .9fr 1.25fr .85fr; gap: 22px;
   }
   .skill-card {
     background: var(--card); border-radius: var(--radius);
@@ -339,20 +333,6 @@
     transition: transform .3s, box-shadow .3s;
   }
   .skill-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-  .skill-card .skill-img {
-    width: 100%; aspect-ratio: 4 / 3;
-    background: linear-gradient(160deg, var(--purple-100), var(--ice));
-    display: flex; align-items: center; justify-content: center;
-    border-bottom: 1px dashed var(--purple-200);
-    padding: 24px;
-  }
-  .skill-img img {
-    width: 64px; height: 64px;
-    object-fit: contain;
-    opacity: .9;
-    transition: transform .3s;
-  }
-  .skill-card:hover .skill-img img { transform: scale(1.1); }
   .skill-card .skill-body {
     padding: 20px 18px 32px; text-align: center;
     display: flex; flex-direction: column; gap: 8px; flex: 1;
@@ -365,23 +345,18 @@
   .tag {
     background: var(--card); border: 1px solid var(--purple-200);
     color: var(--purple-700); padding: 8px 18px; border-radius: 999px;
-    font-size: .88rem; font-weight: 500; transition: all .25s;
+    font-size: .88rem; font-weight: 500; transition: background-color .2s, color .2s, border-color .2s, transform .2s;
   }
   .tag:hover { background: var(--grad-accent); color: #fff; border-color: transparent; transform: translateY(-2px); }
 
   /* ---------- 联系方式 ---------- */
-  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .contact-grid { display: grid; grid-template-columns: 1.15fr .9fr 1fr; gap: 22px; }
   .contact-card {
     background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
     padding: 34px 24px; text-align: center; text-decoration: none; color: inherit;
     transition: transform .3s, box-shadow .3s;
   }
   .contact-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-  .contact-card .icon {
-    width: 58px; height: 58px; border-radius: 16px; margin: 0 auto 16px;
-    background: var(--purple-100); color: var(--purple-600);
-    display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-  }
   .contact-card h3 { color: var(--purple-800); font-size: 1.05rem; }
   .contact-card p { color: var(--text-soft); font-size: .9rem; margin-top: 6px; word-break: break-all; }
 
@@ -514,7 +489,7 @@
     background: var(--grad-hero);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    z-index: 9999;
+    z-index: 150;
     transition: opacity .6s ease, visibility .6s ease;
   }
   .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -568,7 +543,7 @@
   /* ---------- M8 editing-room visual system ---------- */
 :root {
   --ui-bg: #f2f3f6;
-  --ui-surface: #ffffff;
+  --ui-surface: #fcfcfe;
   --ui-panel: #17191f;
   --ui-panel-2: #22252d;
   --ui-ink: #1b1d23;
@@ -583,6 +558,9 @@
   --ui-yellow: #ffd166;
   --card: var(--ui-surface);
   --radius: 8px;
+  --font-display: Baskerville, "Iowan Old Style", "Palatino Linotype", "Songti SC", STSong, serif;
+  --font-body: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
 }
 [data-theme="dark"] {
   --ui-bg: #101116;
@@ -607,6 +585,9 @@ body {
   color: var(--ui-ink);
 }
 h1, h2, h3, p, a, button { letter-spacing: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-style: normal; }
+.eyebrow, .scene-label, .monitor-bar, .monitor-controls, .brand-mark,
+.clip-meta, .timeline-link span, .contact-code, .skill-code { font-family: var(--font-mono); }
 
 nav {
   background: rgba(255, 255, 255, .9);
@@ -724,14 +705,14 @@ nav {
   }
   .monitor-screen {
     position: relative; flex: 1;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 38px 32px; text-align: center; color: #fff;
+      display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  padding: 42px 56px; text-align: left; color: #fff;
     background: var(--ui-panel);
   }
   .hero-copy {
-    min-width: 0; display: flex; flex-direction: column;
-    align-items: center;
+    width: min(720px, 100%); min-width: 0; display: flex; flex-direction: column;
+    align-items: flex-start; text-align: left;
   }
   .ice-crystal {
     position: absolute; z-index: 0;
@@ -757,9 +738,9 @@ nav {
 }
 .hero h1 { color: #fff; font-size: clamp(2.15rem, 5vw, 3.35rem); }
 .hero .tagline { color: rgba(255, 255, 255, .72); margin-top: 8px; }
-.hero .divider { background: var(--ui-cyan); margin: 18px auto; }
+  .hero .divider { background: var(--ui-cyan); margin: 18px 0; }
 .hero .intro { color: rgba(255, 255, 255, .9); font-size: 1.08rem; }
-.hero .cta { margin-top: 24px; gap: 12px; }
+  .hero .cta { margin-top: 24px; gap: 12px; justify-content: flex-start; }
 .monitor-controls .record-state { color: var(--ui-red); display: inline-flex; align-items: center; gap: 7px; }
 .record-state i { width: 8px; height: 8px; border-radius: 50%; background: var(--ui-red); }
 .monitor-scrubber {
@@ -784,12 +765,18 @@ nav {
 }
 .btn-ghost:hover { border-color: var(--ui-cyan); background: rgba(50, 191, 227, .12); box-shadow: none; }
 
-.section-head { margin-bottom: 42px; }
-.section-head .eyebrow {
-  color: var(--ui-red); font-size: .76rem; font-weight: 800;
-  text-transform: uppercase;
-}
-.section-head h2 { color: var(--ui-ink); font-size: clamp(1.9rem, 4vw, 2.65rem); }
+  .section-head {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 420px);
+    align-items: end; gap: 18px 36px; margin-bottom: 42px; text-align: left;
+  }
+  .section-head .eyebrow { grid-column: 1 / -1; color: var(--ui-red); font-size: .76rem; font-weight: 800; text-transform: uppercase; }
+  .section-head h2 { color: var(--ui-ink); font-size: clamp(1.9rem, 4vw, 2.65rem); }
+  .section-head p { margin: 0; justify-self: end; text-align: right; }
+  #about { padding-top: 112px; padding-bottom: 72px; }
+  #works { padding-top: 76px; padding-bottom: 108px; }
+  #skills { padding-top: 104px; padding-bottom: 76px; }
+  #contact { padding-top: 88px; padding-bottom: 124px; }
+  #test2 { padding-top: 104px; padding-bottom: 112px; }
 .section-head p, .about-text p, .highlight-list li, .skill-body p,
 .work-body p, .contact-card p, .media-body p, .director-note li {
   color: var(--ui-muted);
@@ -799,13 +786,12 @@ nav {
   border-radius: 8px; box-shadow: none;
 }
 .about-card::before, .intro-modal-box::before { background: var(--ui-cyan); }
-.about-card .meta li, .skill-card .skill-img, .media-item .media-poster {
+.about-card .meta li, .media-item .media-poster {
   border-color: var(--ui-line);
 }
-.skill-card .skill-img, .work-media {
+.work-media {
   background: var(--ui-bg);
 }
-.skill-img img { width: 54px; height: 54px; }
 .skill-body h3, .about-text h3, .contact-card h3,
 .work-body h3, .media-body h3, .director-note h3, .about-card h3 {
   color: var(--ui-ink);
@@ -813,11 +799,11 @@ nav {
 .about-card .role, .about-card .meta li span:first-child { color: var(--ui-muted); }
 .about-card .meta li span:last-child { color: var(--ui-ink); }
 
-.works-track {
-  position: relative;
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
+  .works-track {
+    position: relative;
+    display: grid; grid-template-columns: 1.15fr .9fr 1.2fr;
+    gap: 24px;
+  }
 .works-track::before {
   content: ""; position: absolute; top: 14px; left: 5%; right: 5%;
   height: 2px; background: var(--ui-cyan);
@@ -852,12 +838,6 @@ nav {
   background: var(--ui-surface); color: var(--ui-muted);
 }
 .tag:hover { background: var(--ui-red); color: #fff; border-color: var(--ui-red); transform: none; }
-
-.contact-card .icon {
-  border-radius: 6px;
-  background: var(--ui-bg); color: var(--ui-purple);
-  border: 1px solid var(--ui-line);
-}
 .contact-card:hover, .skill-card:hover, .media-item:hover {
   transform: none; box-shadow: none; border-color: var(--ui-cyan);
 }
@@ -903,14 +883,18 @@ nav {
   padding: 16px 18px;
 }
 .media-body h3, .media-body p { overflow-wrap: anywhere; }
-.media-types .contact-card:nth-child(1) .icon { color: var(--ui-red); }
-.media-types .contact-card:nth-child(2) .icon { color: var(--ui-cyan); }
-.media-types .contact-card:nth-child(3) .icon { color: var(--ui-yellow); }
+.media-types .contact-card:nth-child(1) .contact-code { color: var(--ui-red); }
+.media-types .contact-card:nth-child(2) .contact-code { color: var(--ui-cyan); }
+.media-types .contact-card:nth-child(3) .contact-code { color: var(--ui-yellow); }
 
-.director-note {
+  .contact-code, .skill-code { color: var(--ui-red); font-size: .72rem; font-weight: 800; }
+  .skill-title { display: flex; align-items: baseline; gap: 10px; }
+  .skill-title h3 { margin: 0; }
+
+  .director-note {
   max-width: 720px; margin: 42px auto 0;
-  padding: 22px 26px; border-left: 3px solid var(--ui-yellow);
-  background: var(--ui-surface); border-radius: 0 8px 8px 0;
+  padding: 22px 26px; border: 1px solid var(--ui-line);
+  background: var(--ui-surface); border-radius: 8px;
 }
 .director-note h3 { text-align: left; margin-bottom: 8px; }
 
@@ -922,9 +906,10 @@ nav {
 .intro-modal-box h2 { color: var(--ui-ink); }
 .intro-modal-box .modal-sub, .modal-text { color: var(--ui-muted); }
 
-footer {
-  background: var(--ui-panel); color: #b9bdc8;
-}
+  footer {
+    text-align: left; padding: 28px 32px;
+    background: var(--ui-panel); color: #b9bdc8;
+  }
 .loader { background: var(--ui-panel); }
 .loader-text { color: rgba(255, 255, 255, .75); }
 
@@ -970,6 +955,13 @@ footer {
   .ice-crystal-two { right: 18px; bottom: 32px; }
   .monitor-timecode { display: none; }
   .monitor-controls span:last-child { display: none; }
+  .section-head {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .section-head p {
+    justify-self: start; text-align: left;
+  }
   .media-sheet { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
@@ -1083,7 +1075,6 @@ footer {
 <section id="about">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">About</span>
       <h2>关于我</h2>
       <p>About me</p>
     </div>
@@ -1168,27 +1159,22 @@ footer {
 <section id="skills">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Skills</span>
       <h2>我的技能</h2>
       <p>这些是我掌握或正在精进的领域。</p>
     </div>
 
     <div class="skills-row">
       <div class="skill-card">
-        <div class="skill-img"><img src="img/salvation.png" alt="摸鱼" width="32" height="32" loading="lazy" decoding="async"></div>
-        <div class="skill-body"><h3>摸鱼</h3><p>爽摸。</p></div>
+        <div class="skill-body"><div class="skill-title"><span class="skill-code">REST</span><h3>摸鱼</h3></div><p>爽摸。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑" width="32" height="32" loading="lazy" decoding="async"></div>
-        <div class="skill-body"><h3>视频剪辑</h3><p>可以进行基本的断章取义。</p></div>
+        <div class="skill-body"><div class="skill-title"><span class="skill-code">CUT</span><h3>视频剪辑</h3></div><p>可以进行基本的断章取义。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/wiggleworm.png" alt="编程" width="32" height="32" loading="lazy" decoding="async"></div>
-        <div class="skill-body"><h3>编程</h3><p>选的技术，会写helloworld。</p></div>
+        <div class="skill-body"><div class="skill-title"><span class="skill-code">DEV</span><h3>编程</h3></div><p>选的技术，会写helloworld。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-img"><img src="img/portablesolts.png" alt="AI" width="32" height="32" loading="lazy" decoding="async"></div>
-        <div class="skill-body"><h3>AI</h3><p>谢谢你大肥鱼和雷总的MIMO</p></div>
+        <div class="skill-body"><div class="skill-title"><span class="skill-code">AI</span><h3>AI</h3></div><p>谢谢你大肥鱼和雷总的MIMO</p></div>
       </div>
     </div>
 
@@ -1205,24 +1191,23 @@ footer {
 <section id="contact">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Contact</span>
       <h2>联系我</h2>
       <p>有任何想聊的，欢迎通过这些方式找到我。</p>
     </div>
 
     <div class="contact-grid">
       <a class="contact-card" href="mailto:1652702730@qq.com">
-        <div class="icon">✉</div>
+        <div class="contact-code">MAIL</div>
         <h3>邮箱</h3>
         <p>1652702730@qq.com</p>
       </a>
       <a class="contact-card" href="https://github.com/M8Rag3" target="_blank" rel="noopener">
-        <div class="icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14 0 1.55-.02 2.79-.02 3.17 0 .3.21.67.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></div>
+        <div class="contact-code">GIT</div>
         <h3>GitHub</h3>
         <p>github.com/M8Rag3</p>
       </a>
       <a class="contact-card" href="https://space.bilibili.com/30166441" target="_blank" rel="noopener">
-        <div class="icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.267.574-.4.92-.4.346 0 .653.133.92.4l1.32 1.36h2.72l1.32-1.36c.267-.267.574-.4.92-.4.346 0 .653.133.92.4l.027.027c.249.249.373.551.373.907 0 .355-.124.65-.373.906L17.813 4.653zM8.693 8.44a1.573 1.573 0 0 0-1.147.467 1.573 1.573 0 0 0-.466 1.146v3.28c0 .427.155.8.466 1.12.311.32.694.48 1.147.48s.836-.16 1.147-.48c.311-.32.466-.693.466-1.12v-3.28c0-.435-.155-.827-.466-1.173-.311-.347-.694-.52-1.147-.52zm6.667 0a1.573 1.573 0 0 0-1.147.467 1.573 1.573 0 0 0-.466 1.146v3.28c0 .427.155.8.466 1.12.311.32.694.48 1.147.48s.836-.16 1.147-.48c.311-.32.466-.693.466-1.12v-3.28c0-.435-.155-.827-.466-1.173-.311-.347-.694-.52-1.147-.52z"/></svg></div>
+        <div class="contact-code">BILI</div>
         <h3>Bilibili</h3>
         <p>space.bilibili.com/30166441</p>
       </a>
@@ -1241,17 +1226,17 @@ footer {
 
     <div class="contact-grid media-types">
       <div class="contact-card">
-        <div class="icon">🎬</div>
+        <div class="contact-code">ANI</div>
         <h3>番剧</h3>
         <p>为什么这么爱看异世界厕纸我也不知道</p>
       </div>
       <div class="contact-card">
-        <div class="icon">🎮</div>
+        <div class="contact-code">GAME</div>
         <h3>游戏</h3>
         <p>猎奇神游品鉴者</p>
       </div>
       <div class="contact-card">
-        <div class="icon">✂️</div>
+        <div class="contact-code">EDIT</div>
         <h3>剪辑</h3>
         <p>可以剪的不知天地为何物</p>
       </div>
@@ -1493,7 +1478,7 @@ footer {
 
   // 滚动渐显：区块进入视口时淡入
   const revealEls = document.querySelectorAll(
-    '.section-head, .about-grid, .works-track, .skills-row, .contact-grid, .media-sheet, .director-note, .tag-cloud'
+    '.works-track'
   );
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
