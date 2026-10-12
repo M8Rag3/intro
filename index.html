@@ -944,13 +944,8 @@ nav {
   font-size: .72rem; font-variant-numeric: tabular-nums;
   background: rgba(11, 12, 16, .55);
 }
-.monitor-bar { border-bottom: 1px solid var(--ui-line-dark); }
+.monitor-bar { border-bottom: 1px solid var(--ui-line-dark); justify-content: flex-end; }
 .monitor-controls { border-top: 1px solid var(--ui-line-dark); }
-.monitor-brand { display: inline-flex; align-items: center; gap: 8px; }
-.monitor-brand i {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--ui-red); box-shadow: 0 0 0 3px rgba(255, 70, 85, .14);
-}
   .monitor-timecode { color: var(--ui-cyan); }
   .monitor-right { display: inline-flex; align-items: center; gap: 12px; }
   .frame-corner {
@@ -1391,7 +1386,6 @@ nav {
         <span class="frame-corner corner-bl" aria-hidden="true"></span>
         <span class="frame-corner corner-br" aria-hidden="true"></span>
     <div class="monitor-bar">
-      <span class="monitor-brand"><i aria-hidden="true"></i> M8RAGE // EMILIA PROGRAM</span>
       <span class="monitor-right">
         <span class="monitor-timecode">00:00:01:12</span>
       </span>
