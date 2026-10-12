@@ -515,6 +515,31 @@
   .reveal.visible { opacity: 1; transform: none; }
 
 
+  .ambient-crystals {
+    position: fixed; inset: 0; z-index: 0;
+    overflow: hidden; pointer-events: none;
+  }
+  .ambient-crystals i {
+    position: absolute; width: 10px; height: 10px;
+    background: var(--ui-violet); opacity: .16;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .ambient-crystals i:nth-child(1) { left: 4%; top: 18%; }
+  .ambient-crystals i:nth-child(2) { left: 12%; top: 72%; background: var(--ui-ice); }
+  .ambient-crystals i:nth-child(3) { right: 8%; top: 24%; width: 7px; height: 7px; }
+  .ambient-crystals i:nth-child(4) { right: 4%; top: 68%; background: var(--ui-ice); }
+  .ambient-crystals i:nth-child(5) { left: 46%; top: 8%; width: 6px; height: 6px; opacity: .12; }
+  .ambient-crystals i:nth-child(6) { right: 42%; bottom: 8%; width: 8px; height: 8px; opacity: .12; }
+  .ambient-crystals i:nth-child(2),
+  .ambient-crystals i:nth-child(5) {
+    animation: ambientCrystal 7s ease-in-out infinite;
+  }
+  main, footer { position: relative; z-index: 1; }
+  @keyframes ambientCrystal {
+    0%, 100% { transform: translateY(0) rotate(45deg); opacity: .12; }
+    50% { transform: translateY(-12px) rotate(68deg); opacity: .28; }
+  }
+
   .ice-transition {
     position: fixed; inset: 0; z-index: 200;
     pointer-events: none; overflow: hidden;
@@ -708,6 +733,11 @@ nav {
     position: absolute; width: 22px; height: 22px;
     border-color: var(--ui-ice); border-style: solid;
     opacity: .75; pointer-events: none; z-index: 2;
+    animation: frostPulse 5s ease-in-out infinite;
+  }
+  @keyframes frostPulse {
+    0%, 100% { opacity: .52; }
+    50% { opacity: .95; }
   }
   .corner-tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
   .corner-tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
@@ -949,6 +979,10 @@ nav {
 .intro-modal-box h2 { color: var(--ui-ink); }
 .intro-modal-box .modal-sub, .modal-text { color: var(--ui-muted); }
 
+  footer::before {
+    content: ""; display: block; width: 52px; height: 1px;
+    margin-bottom: 14px; background: var(--ui-violet);
+  }
   footer {
     text-align: left; padding: 28px 32px;
     background: var(--ui-panel); color: #b9bdc8;
@@ -1005,6 +1039,7 @@ nav {
   .section-head p {
     justify-self: start; text-align: left;
   }
+  .ambient-crystals i:nth-child(n+4) { display: none; }
   .frame-corner { width: 16px; height: 16px; }
   .media-sheet { grid-template-columns: 1fr; }
 }
@@ -1016,7 +1051,8 @@ nav {
 }
   @media (prefers-reduced-motion: reduce) {
     .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
-    .ice-transition { display: none; }
+    .ice-transition, .ambient-crystals { display: none; }
+    .frame-corner { animation: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1033,6 +1069,7 @@ nav {
 <body class="modal-open">
 <a class="skip-link" id="skipLink" href="#main-content">跳到主要内容</a>
 <div class="ice-transition" id="iceTransition" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="ambient-crystals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- ===== 加载动画 ===== -->
 <div class="loader" id="loader" role="status" aria-live="polite">
@@ -1115,7 +1152,7 @@ nav {
     <div class="monitor-controls" aria-hidden="true">
       <span class="record-state"><i></i> REC</span>
       <span class="monitor-scrubber"><i></i></span>
-      <span>RE:ZERO / EMILIA THEME</span>
+
     </div>
   </div>
 </header>
