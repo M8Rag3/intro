@@ -684,34 +684,14 @@ nav {
   }
   .monitor-screen {
     position: relative; flex: 1;
-    display: grid; grid-template-columns: minmax(0, 1fr) 210px;
-    align-items: center; gap: 42px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     padding: 38px 32px; text-align: center; color: #fff;
     background: var(--ui-panel);
   }
   .hero-copy {
     min-width: 0; display: flex; flex-direction: column;
     align-items: center;
-  }
-  .emilia-source {
-    width: 210px; justify-self: end;
-    overflow: hidden;
-    border: 1px solid #4c4560; border-radius: 8px;
-    background: #24212e;
-    box-shadow: 0 18px 38px rgba(0, 0, 0, .22);
-  }
-  .source-head, .source-caption {
-    min-height: 34px; padding: 0 11px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; color: #b8b0c8;
-    font-size: .68rem; font-weight: 700;
-  }
-  .source-head { border-bottom: 1px solid #4c4560; }
-  .source-caption { border-top: 1px solid #4c4560; }
-  .source-caption strong { color: var(--ui-ice); font-size: .78rem; }
-  .emilia-source img {
-    width: 100%; aspect-ratio: 2 / 3; display: block;
-    object-fit: cover; object-position: top center;
   }
   .ice-crystal {
     position: absolute; z-index: 0;
@@ -720,7 +700,7 @@ nav {
   }
   .ice-crystal-one { top: 44px; left: 24px; font-size: 2.2rem; }
   .ice-crystal-two { right: 246px; bottom: 38px; font-size: 1.65rem; }
-  .hero-copy, .emilia-source { position: relative; z-index: 1; }
+  .hero-copy { position: relative; z-index: 1; }
 .monitor-screen::before {
   content: "PREVIEW / M8RAGE";
   position: absolute; top: 14px; left: 16px;
@@ -944,28 +924,7 @@ footer {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .btn { min-height: 42px; padding: 10px 14px; font-size: .9rem; }
-  .emilia-source {
-    width: min(260px, 100%); height: 104px; margin-top: 0;
-    display: grid; grid-template-columns: 72px 1fr;
-    grid-template-rows: 1fr 1fr;
-    justify-self: center;
-  }
-  .source-head {
-    grid-column: 2; grid-row: 1; min-height: 0;
-    border-bottom: 0; padding: 0 12px;
-  }
-  .emilia-source img {
-    grid-column: 1; grid-row: 1 / 3;
-    width: 72px; height: 104px; aspect-ratio: auto;
-  }
-  .source-caption {
-    grid-column: 2; grid-row: 2; min-height: 0;
-    border-top: 0; padding: 0 12px;
-    flex-direction: column; align-items: flex-start;
-    justify-content: center; gap: 2px;
-  }
-  .source-caption strong { font-size: .72rem; }
-  .ice-crystal-two { right: 18px; bottom: 170px; }
+  .ice-crystal-two { right: 18px; bottom: 32px; }
   .monitor-timecode { display: none; }
   .monitor-controls span:last-child { display: none; }
   .media-sheet { grid-template-columns: 1fr; }
@@ -1065,11 +1024,6 @@ footer {
         </div>
       </div>
 
-      <aside class="emilia-source" aria-label="爱蜜莉雅主题参考">
-        <div class="source-head"><span>ART REF</span><span>EP.01</span></div>
-        <img src="img/emilia.webp" alt="爱蜜莉雅" width="230" height="345" decoding="async">
-        <div class="source-caption"><strong>EMILIA</strong><span>ICE / VIOLET</span></div>
-      </aside>
     </div>
 
     <div class="monitor-controls" aria-hidden="true">
