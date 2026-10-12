@@ -521,8 +521,46 @@
   }
   .ambient-crystals::before,
   .ambient-crystals::after {
-    content: ""; position: absolute; top: 12%; bottom: 12%;
-    width: 1px; background: var(--ui-line); opacity: .34;
+    content: ""; position: absolute; top: 8%; bottom: 8%;
+    width: 1px; background: var(--ui-line); opacity: .42;
+  }
+  .edge-slab {
+    position: absolute; top: 12%; bottom: 12%;
+    width: 128px; border: 1px solid var(--ui-violet);
+    background: rgba(167, 139, 250, .055);
+    opacity: .72;
+    clip-path: polygon(18% 0, 100% 8%, 82% 100%, 0 92%);
+  }
+  .slab-left { left: -42px; transform: skewY(-6deg); }
+  .slab-right {
+    right: -42px; transform: skewY(6deg);
+    background: rgba(50, 191, 227, .045);
+    border-color: var(--ui-cyan);
+  }
+  .edge-word {
+    position: absolute; top: 26%;
+    color: var(--ui-violet); opacity: .09;
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7vw, 7.5rem);
+    line-height: .82; writing-mode: vertical-rl;
+    user-select: none; pointer-events: none;
+  }
+  .edge-word-left { left: 28px; transform: rotate(180deg); }
+  .edge-word-right {
+    right: 30px; color: var(--ui-ice); opacity: .1;
+    transform: rotate(180deg);
+  }
+  .edge-moon {
+    position: absolute; right: -74px; top: 34%;
+    width: 190px; height: 190px;
+    border: 1px solid var(--ui-cyan); opacity: .16;
+    transform: rotate(45deg);
+    animation: moonTurn 22s linear infinite;
+  }
+  @keyframes moonTurn {
+    0% { transform: rotate(45deg) scale(.94); opacity: .11; }
+    50% { transform: rotate(135deg) scale(1.08); opacity: .22; }
+    100% { transform: rotate(225deg) scale(.94); opacity: .11; }
   }
   .ambient-crystals::before { left: 12px; }
   .ambient-crystals::after { right: 18px; }
@@ -575,10 +613,10 @@
   main [data-mark], #test2[data-mark] { position: relative; }
   [data-mark]::after {
     content: attr(data-mark);
-    position: absolute; right: 22px; top: 78px;
-    color: var(--ui-violet); opacity: .12;
-    font-family: var(--font-mono); font-size: clamp(3.8rem, 7vw, 7rem);
-    font-weight: 700; line-height: .8;
+    position: absolute; right: -12px; top: 64px;
+    color: var(--ui-violet); opacity: .18;
+    font-family: var(--font-mono); font-size: clamp(5.5rem, 11vw, 11rem);
+    font-weight: 700; line-height: .72;
     pointer-events: none; user-select: none;
   }
   .hero[data-mark]::after { color: var(--ui-ice); opacity: .1; top: 88px; }
@@ -1088,6 +1126,7 @@ nav {
   }
   .ambient-crystals i:nth-child(n+4),
   .edge-sigil, .frost-spark, .edge-caption,
+  .edge-slab, .edge-word, .edge-moon,
   [data-mark]::after { display: none; }
   .ambient-crystals::before,
   .ambient-crystals::after { top: 16%; bottom: 16%; opacity: .22; }
@@ -1103,7 +1142,7 @@ nav {
   @media (prefers-reduced-motion: reduce) {
     .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
     .ice-transition, .ambient-crystals { display: none; }
-    .edge-sigil, .frost-spark, .frame-corner { animation: none; }
+    .edge-sigil, .frost-spark, .edge-moon, .frame-corner { animation: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1126,6 +1165,11 @@ nav {
   <span class="edge-sigil sigil-right"></span>
   <span class="frost-spark"></span>
   <span class="edge-caption">ICE / VIOLET</span>
+  <span class="edge-slab slab-left"></span>
+  <span class="edge-slab slab-right"></span>
+  <span class="edge-word edge-word-left">M8 / ARCHIVE</span>
+  <span class="edge-word edge-word-right">ICE / MEMORY</span>
+  <span class="edge-moon"></span>
 </div>
 
 <!-- ===== 加载动画 ===== -->
