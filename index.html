@@ -611,32 +611,36 @@
   main, footer { position: relative; z-index: 1; }
   main > header, main > section { position: relative; z-index: 1; }
   .center-crystal-field {
-    position: absolute; inset: 0; z-index: 0;
+    position: absolute; inset: 0; z-index: 2;
     overflow: hidden; pointer-events: none;
+    mix-blend-mode: screen;
   }
   .center-seam {
-    position: absolute; left: 50%; top: 12%; bottom: 10%;
-    width: 1px; background: var(--ui-line); opacity: .18;
+    position: absolute; left: 50%; top: 10%; bottom: 8%;
+    width: 2px; background: var(--ui-cyan); opacity: .42;
+    box-shadow: 0 0 12px rgba(88, 215, 242, .3);
   }
   .center-diamond {
-    position: absolute; width: 28px; height: 28px;
-    border: 1px solid var(--ui-violet); opacity: .22;
+    position: absolute; width: 54px; height: 54px;
+    border: 2px solid var(--ui-violet); opacity: .42;
+    background: rgba(167, 139, 250, .08);
     transform: rotate(45deg);
   }
-  .diamond-a { left: 24%; top: 28%; width: 42px; height: 42px; }
+  .diamond-a { left: 18%; top: 28%; width: 86px; height: 86px; opacity: .32; }
   .diamond-b {
-    left: 52%; top: 48%; width: 22px; height: 22px;
-    border-color: var(--ui-cyan); opacity: .32;
+    left: 48%; top: 48%; width: 52px; height: 52px;
+    border-color: var(--ui-cyan); opacity: .58;
+    background: rgba(88, 215, 242, .1);
     animation: centerDrift 9s ease-in-out infinite;
   }
-  .diamond-c { left: 72%; top: 68%; width: 54px; height: 54px; opacity: .14; }
+  .diamond-c { left: 78%; top: 68%; width: 104px; height: 104px; opacity: .26; }
   .center-cross {
-    position: absolute; width: 48px; height: 48px; opacity: .24;
+    position: absolute; width: 86px; height: 86px; opacity: .48;
   }
   .center-cross::before,
   .center-cross::after {
     content: ""; position: absolute; left: 50%; top: 50%;
-    width: 54px; height: 1px; background: var(--ui-ice);
+    width: 94px; height: 2px; background: var(--ui-ice);
   }
   .center-cross::before { transform: translate(-50%, -50%) rotate(45deg); }
   .center-cross::after { transform: translate(-50%, -50%) rotate(-45deg); }
@@ -648,10 +652,12 @@
   }
   main [data-mark], #test2[data-mark] { position: relative; }
   [data-mark]::before {
-    content: ""; position: absolute; left: 50%; top: 34px;
-    width: 18px; height: 18px;
-    border: 1px solid var(--ui-cyan); opacity: .3;
+    content: ""; position: absolute; left: 50%; top: 28px;
+    width: 34px; height: 34px;
+    border: 2px solid var(--ui-cyan); opacity: .58;
+    background: rgba(88, 215, 242, .08);
     transform: translateX(-50%) rotate(45deg);
+    box-shadow: 0 0 18px rgba(88, 215, 242, .18);
     pointer-events: none;
   }
   [data-mark]::after {
