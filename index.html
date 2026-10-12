@@ -609,7 +609,51 @@
     animation: ambientCrystal 7s ease-in-out infinite;
   }
   main, footer { position: relative; z-index: 1; }
+  main > header, main > section { position: relative; z-index: 1; }
+  .center-crystal-field {
+    position: absolute; inset: 0; z-index: 0;
+    overflow: hidden; pointer-events: none;
+  }
+  .center-seam {
+    position: absolute; left: 50%; top: 12%; bottom: 10%;
+    width: 1px; background: var(--ui-line); opacity: .18;
+  }
+  .center-diamond {
+    position: absolute; width: 28px; height: 28px;
+    border: 1px solid var(--ui-violet); opacity: .22;
+    transform: rotate(45deg);
+  }
+  .diamond-a { left: 24%; top: 28%; width: 42px; height: 42px; }
+  .diamond-b {
+    left: 52%; top: 48%; width: 22px; height: 22px;
+    border-color: var(--ui-cyan); opacity: .32;
+    animation: centerDrift 9s ease-in-out infinite;
+  }
+  .diamond-c { left: 72%; top: 68%; width: 54px; height: 54px; opacity: .14; }
+  .center-cross {
+    position: absolute; width: 48px; height: 48px; opacity: .24;
+  }
+  .center-cross::before,
+  .center-cross::after {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    width: 54px; height: 1px; background: var(--ui-ice);
+  }
+  .center-cross::before { transform: translate(-50%, -50%) rotate(45deg); }
+  .center-cross::after { transform: translate(-50%, -50%) rotate(-45deg); }
+  .cross-a { left: 35%; top: 72%; }
+  .cross-b { left: 64%; top: 22%; transform: scale(.72); opacity: .18; }
+  @keyframes centerDrift {
+    0%, 100% { transform: rotate(45deg) translateY(0); opacity: .18; }
+    50% { transform: rotate(68deg) translateY(-16px); opacity: .38; }
+  }
   main [data-mark], #test2[data-mark] { position: relative; }
+  [data-mark]::before {
+    content: ""; position: absolute; left: 50%; top: 34px;
+    width: 18px; height: 18px;
+    border: 1px solid var(--ui-cyan); opacity: .3;
+    transform: translateX(-50%) rotate(45deg);
+    pointer-events: none;
+  }
   [data-mark]::after {
     content: attr(data-mark);
     position: absolute; right: -12px; top: 64px;
@@ -1126,6 +1170,7 @@ nav {
   .ambient-crystals i:nth-child(n+4),
   .edge-sigil, .frost-spark,
   .edge-slab, .edge-moon, .edge-cross,
+  .center-crystal-field, [data-mark]::before,
   [data-mark]::after { display: none; }
   .ambient-crystals::before,
   .ambient-crystals::after { top: 16%; bottom: 16%; opacity: .22; }
@@ -1141,7 +1186,8 @@ nav {
   @media (prefers-reduced-motion: reduce) {
     .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
     .ice-transition, .ambient-crystals { display: none; }
-    .edge-sigil, .frost-spark, .edge-moon, .edge-slab, .frame-corner { animation: none; }
+    .edge-sigil, .frost-spark, .edge-moon, .edge-slab,
+    .center-diamond, .frame-corner { animation: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1213,6 +1259,14 @@ nav {
 </aside>
 
 <main id="main-content">
+<div class="center-crystal-field" aria-hidden="true">
+  <span class="center-seam"></span>
+  <i class="center-diamond diamond-a"></i>
+  <i class="center-diamond diamond-b"></i>
+  <i class="center-diamond diamond-c"></i>
+  <i class="center-cross cross-a"></i>
+  <i class="center-cross cross-b"></i>
+</div>
 <header class="hero" id="home" data-mark="01">
             <div class="monitor-frame">
         <span class="frame-corner corner-tl" aria-hidden="true"></span>
