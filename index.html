@@ -587,7 +587,7 @@ body {
 h1, h2, h3, p, a, button { letter-spacing: 0; }
 h1, h2, h3 { font-family: var(--font-display); font-style: normal; }
 .eyebrow, .scene-label, .monitor-bar, .monitor-controls, .brand-mark,
-.clip-meta, .timeline-link span, .contact-code, .skill-code { font-family: var(--font-mono); }
+.clip-meta, .timeline-link span, .contact-code { font-family: var(--font-mono); }
 
 nav {
   background: rgba(255, 255, 255, .9);
@@ -673,13 +673,6 @@ nav {
   background: var(--ui-panel);
   justify-content: center;
 }
-.emilia-watermark {
-    position: absolute; right: 3%; bottom: -12%;
-    width: min(36vw, 430px); opacity: .14;
-    filter: saturate(.82) contrast(1.05);
-    mix-blend-mode: screen;
-    pointer-events: none; user-select: none; z-index: 0;
-  }
   .monitor-frame {
     position: relative; z-index: 1;
     width: min(1080px, 100%);
@@ -926,9 +919,20 @@ nav {
 .media-types .contact-card:nth-child(2) .contact-code { color: var(--ui-cyan); }
 .media-types .contact-card:nth-child(3) .contact-code { color: var(--ui-yellow); }
 
-  .contact-code, .skill-code { color: var(--ui-red); font-size: .72rem; font-weight: 800; }
-  .skill-title { display: flex; align-items: baseline; gap: 10px; }
-  .skill-title h3 { margin: 0; }
+  .contact-code { color: var(--ui-red); font-size: .72rem; font-weight: 800; }
+  .skill-card .skill-img {
+    width: 100%; aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background: var(--ui-bg);
+    border-bottom: 1px dashed var(--ui-line);
+  }
+  .skill-img img {
+    width: 54px; height: 54px;
+    object-fit: contain; opacity: .9;
+    transition: transform .25s ease;
+  }
+  .skill-card:hover .skill-img img { transform: scale(1.04); }
 
   .director-note {
   max-width: 720px; margin: 42px auto 0;
@@ -1001,7 +1005,6 @@ nav {
   .section-head p {
     justify-self: start; text-align: left;
   }
-  .emilia-watermark { display: none; }
   .frame-corner { width: 16px; height: 16px; }
   .media-sheet { grid-template-columns: 1fr; }
 }
@@ -1075,8 +1078,7 @@ nav {
 
 <main id="main-content">
 <header class="hero" id="home">
-      <img class="emilia-watermark" src="img/emilia.webp" alt="" aria-hidden="true" width="230" height="345" decoding="async">
-      <div class="monitor-frame">
+            <div class="monitor-frame">
         <span class="frame-corner corner-tl" aria-hidden="true"></span>
         <span class="frame-corner corner-tr" aria-hidden="true"></span>
         <span class="frame-corner corner-bl" aria-hidden="true"></span>
@@ -1211,16 +1213,20 @@ nav {
 
     <div class="skills-row">
       <div class="skill-card">
-        <div class="skill-body"><div class="skill-title"><span class="skill-code">REST</span><h3>摸鱼</h3></div><p>爽摸。</p></div>
+        <div class="skill-img"><img src="img/salvation.png" alt="摸鱼" width="32" height="32" loading="lazy" decoding="async"></div>
+        <div class="skill-body"><h3>摸鱼</h3><p>爽摸。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-body"><div class="skill-title"><span class="skill-code">CUT</span><h3>视频剪辑</h3></div><p>可以进行基本的断章取义。</p></div>
+        <div class="skill-img"><img src="img/pingkingshears.png" alt="视频剪辑" width="32" height="32" loading="lazy" decoding="async"></div>
+        <div class="skill-body"><h3>视频剪辑</h3><p>可以进行基本的断章取义。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-body"><div class="skill-title"><span class="skill-code">DEV</span><h3>编程</h3></div><p>选的技术，会写helloworld。</p></div>
+        <div class="skill-img"><img src="img/wiggleworm.png" alt="编程" width="32" height="32" loading="lazy" decoding="async"></div>
+        <div class="skill-body"><h3>编程</h3><p>选的技术，会写helloworld。</p></div>
       </div>
       <div class="skill-card">
-        <div class="skill-body"><div class="skill-title"><span class="skill-code">AI</span><h3>AI</h3></div><p>谢谢你大肥鱼和雷总的MIMO</p></div>
+        <div class="skill-img"><img src="img/portablesolts.png" alt="AI" width="32" height="32" loading="lazy" decoding="async"></div>
+        <div class="skill-body"><h3>AI</h3><p>谢谢你大肥鱼和雷总的MIMO</p></div>
       </div>
     </div>
 
