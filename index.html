@@ -519,6 +519,43 @@
     position: fixed; inset: 0; z-index: 0;
     overflow: hidden; pointer-events: none;
   }
+  .ambient-crystals::before,
+  .ambient-crystals::after {
+    content: ""; position: absolute; top: 12%; bottom: 12%;
+    width: 1px; background: var(--ui-line); opacity: .34;
+  }
+  .ambient-crystals::before { left: 12px; }
+  .ambient-crystals::after { right: 18px; }
+  .edge-sigil {
+    position: absolute; width: 38px; height: 38px;
+    border: 1px solid var(--ui-violet); opacity: .22;
+    transform: rotate(45deg);
+    animation: sigilTurn 12s ease-in-out infinite;
+  }
+  .sigil-left { left: 4px; top: 36%; }
+  .sigil-right { right: 2px; top: 58%; animation-delay: -5s; }
+  .frost-spark {
+    position: absolute; right: 13px; top: 18%;
+    width: 11px; height: 11px;
+    background: var(--ui-ice); opacity: .42;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    animation: railSpark 8s ease-in-out infinite;
+  }
+  .edge-caption {
+    position: absolute; right: 31px; top: 42%;
+    color: var(--ui-violet); opacity: .28;
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono); font-size: .66rem;
+    font-weight: 700;
+  }
+  @keyframes sigilTurn {
+    0%, 100% { transform: rotate(45deg) scale(.92); opacity: .16; }
+    50% { transform: rotate(58deg) scale(1.05); opacity: .34; }
+  }
+  @keyframes railSpark {
+    0%, 100% { transform: translateY(-12px) rotate(45deg); opacity: .18; }
+    50% { transform: translateY(160px) rotate(70deg); opacity: .58; }
+  }
   .ambient-crystals i {
     position: absolute; width: 10px; height: 10px;
     background: var(--ui-violet); opacity: .16;
@@ -535,6 +572,16 @@
     animation: ambientCrystal 7s ease-in-out infinite;
   }
   main, footer { position: relative; z-index: 1; }
+  main [data-mark], #test2[data-mark] { position: relative; }
+  [data-mark]::after {
+    content: attr(data-mark);
+    position: absolute; right: 22px; top: 78px;
+    color: var(--ui-violet); opacity: .12;
+    font-family: var(--font-mono); font-size: clamp(3.8rem, 7vw, 7rem);
+    font-weight: 700; line-height: .8;
+    pointer-events: none; user-select: none;
+  }
+  .hero[data-mark]::after { color: var(--ui-ice); opacity: .1; top: 88px; }
   @keyframes ambientCrystal {
     0%, 100% { transform: translateY(0) rotate(45deg); opacity: .12; }
     50% { transform: translateY(-12px) rotate(68deg); opacity: .28; }
@@ -1039,7 +1086,11 @@ nav {
   .section-head p {
     justify-self: start; text-align: left;
   }
-  .ambient-crystals i:nth-child(n+4) { display: none; }
+  .ambient-crystals i:nth-child(n+4),
+  .edge-sigil, .frost-spark, .edge-caption,
+  [data-mark]::after { display: none; }
+  .ambient-crystals::before,
+  .ambient-crystals::after { top: 16%; bottom: 16%; opacity: .22; }
   .frame-corner { width: 16px; height: 16px; }
   .media-sheet { grid-template-columns: 1fr; }
 }
@@ -1052,7 +1103,7 @@ nav {
   @media (prefers-reduced-motion: reduce) {
     .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
     .ice-transition, .ambient-crystals { display: none; }
-    .frame-corner { animation: none; }
+    .edge-sigil, .frost-spark, .frame-corner { animation: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1069,7 +1120,13 @@ nav {
 <body class="modal-open">
 <a class="skip-link" id="skipLink" href="#main-content">跳到主要内容</a>
 <div class="ice-transition" id="iceTransition" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-<div class="ambient-crystals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="ambient-crystals" aria-hidden="true">
+  <i></i><i></i><i></i><i></i><i></i><i></i>
+  <span class="edge-sigil sigil-left"></span>
+  <span class="edge-sigil sigil-right"></span>
+  <span class="frost-spark"></span>
+  <span class="edge-caption">ICE / VIOLET</span>
+</div>
 
 <!-- ===== 加载动画 ===== -->
 <div class="loader" id="loader" role="status" aria-live="polite">
@@ -1114,7 +1171,7 @@ nav {
 </aside>
 
 <main id="main-content">
-<header class="hero" id="home">
+<header class="hero" id="home" data-mark="01">
             <div class="monitor-frame">
         <span class="frame-corner corner-tl" aria-hidden="true"></span>
         <span class="frame-corner corner-tr" aria-hidden="true"></span>
@@ -1157,7 +1214,7 @@ nav {
   </div>
 </header>
 
-<section id="about">
+<section id="about" data-mark="02">
   <div class="container">
     <div class="section-head">
       <h2>关于我</h2>
@@ -1197,7 +1254,7 @@ nav {
   </div>
 </section>
 
-<section id="works">
+<section id="works" data-mark="03">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Timeline / Works</span>
@@ -1241,7 +1298,7 @@ nav {
   </div>
 </section>
 
-<section id="skills">
+<section id="skills" data-mark="04">
   <div class="container">
     <div class="section-head">
       <h2>我的技能</h2>
@@ -1277,7 +1334,7 @@ nav {
   </div>
 </section>
 
-<section id="contact">
+<section id="contact" data-mark="05">
   <div class="container">
     <div class="section-head">
       <h2>联系我</h2>
@@ -1305,7 +1362,7 @@ nav {
 </section>
 </main>
 
-<section id="test2" class="page" data-page="test2">
+<section id="test2" class="page" data-page="test2" data-mark="06">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Media Bin</span>
