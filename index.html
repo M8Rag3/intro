@@ -539,7 +539,33 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
 
-/* ---------- M8 editing-room visual system ---------- */
+
+  .ice-transition {
+    position: fixed; inset: 0; z-index: 200;
+    pointer-events: none; overflow: hidden;
+    opacity: 0; visibility: hidden;
+  }
+  .ice-transition.active { opacity: 1; visibility: visible; }
+  .ice-transition i {
+    position: absolute; width: 18vmax; height: 18vmax;
+    background: var(--ui-ice); opacity: 0;
+    clip-path: polygon(50% 0, 64% 34%, 100% 50%, 64% 66%, 50% 100%, 36% 66%, 0 50%, 36% 34%);
+  }
+  .ice-transition i:nth-child(1) { left: -4vmax; top: 8%; }
+  .ice-transition i:nth-child(2) { left: 28%; top: -8vmax; background: var(--ui-violet); }
+  .ice-transition i:nth-child(3) { right: 14%; top: -6vmax; }
+  .ice-transition i:nth-child(4) { right: -5vmax; top: 42%; background: var(--ui-violet); }
+  .ice-transition.active i { animation: iceShard .62s cubic-bezier(.2, .8, .2, 1) both; }
+  .ice-transition.active i:nth-child(2) { animation-delay: .04s; }
+  .ice-transition.active i:nth-child(3) { animation-delay: .08s; }
+  .ice-transition.active i:nth-child(4) { animation-delay: .12s; }
+  @keyframes iceShard {
+    0% { opacity: 0; transform: scale(.15) rotate(-24deg); }
+    42% { opacity: .82; }
+    100% { opacity: 0; transform: scale(2.25) rotate(24deg); }
+  }
+
+  /* ---------- M8 editing-room visual system ---------- */
 :root {
   --ui-bg: #f2f3f6;
   --ui-surface: #ffffff;
@@ -623,24 +649,38 @@ nav {
   transform: translateY(-50%);
   width: 112px; z-index: 90;
 }
-.timeline-track {
-  position: absolute; left: 7px; top: 10px; bottom: 10px;
-  width: 2px; background: var(--ui-line);
-}
-.timeline-progress {
-  width: 100%; height: var(--scroll-progress, 0%);
-  background: var(--ui-cyan);
-}
+  .timeline-track {
+    position: absolute; left: 7px; top: 10px; bottom: 10px;
+    width: 2px; background: var(--ui-line); touch-action: none;
+  }
+  .timeline-progress {
+    width: 100%; height: var(--scroll-progress, 0%);
+    background: var(--ui-cyan); pointer-events: none;
+  }
+  .timeline-playhead {
+    position: absolute; left: 50%; top: var(--scroll-progress, 0%);
+    width: 22px; height: 22px; padding: 0;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--ui-cyan); border-radius: 50%;
+    background: var(--ui-bg); cursor: grab; touch-action: none; z-index: 3;
+  }
+  .timeline-playhead::after {
+    content: ""; position: absolute; inset: 5px;
+    background: var(--ui-purple);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+  .timeline-playhead.dragging { cursor: grabbing; border-color: var(--ui-red); }
 .timeline-list { list-style: none; position: relative; display: grid; gap: 22px; }
 .timeline-link {
   display: grid; grid-template-columns: 16px 1fr; gap: 9px;
   align-items: center; color: var(--ui-muted);
   text-decoration: none; font-size: .72rem;
 }
-.timeline-link::before {
-  content: ""; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--ui-bg); border: 2px solid var(--ui-line);
-}
+  .timeline-link::before {
+    content: ""; width: 13px; height: 13px; border-radius: 0;
+    background: var(--ui-bg); border: 2px solid var(--ui-line);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
 .timeline-link span { grid-column: 2; font-variant-numeric: tabular-nums; }
 .timeline-link strong { grid-column: 2; font-size: .82rem; }
 .timeline-link.active { color: var(--ui-ink); }
@@ -701,10 +741,9 @@ nav {
   .ice-crystal-one { top: 44px; left: 24px; font-size: 2.2rem; }
   .ice-crystal-two { right: 246px; bottom: 38px; font-size: 1.65rem; }
   .hero-copy { position: relative; z-index: 1; }
-.monitor-screen::before {
-  content: "PREVIEW / M8RAGE";
+.scene-label {
   position: absolute; top: 14px; left: 16px;
-  color: #838895; font-size: .7rem;
+  color: var(--ui-ice); font-size: .7rem; font-weight: 700;
 }
 .monitor-screen::after {
   content: "SAFE AREA";
@@ -899,6 +938,10 @@ footer {
   }
   .timeline-track { left: 18px; right: 18px; top: 12px; bottom: auto; width: auto; height: 2px; }
   .timeline-progress { width: var(--scroll-progress, 0%); height: 100%; }
+  .timeline-playhead {
+    left: var(--scroll-progress, 0%); top: 50%;
+    transform: translate(-50%, -50%);
+  }
   .timeline-list { display: flex; justify-content: space-between; gap: 10px; }
   .timeline-link { grid-template-columns: 12px 1fr; gap: 6px; }
   .timeline-link strong { display: none; }
@@ -935,9 +978,10 @@ footer {
   .timeline-list { gap: 4px; }
   .timeline-link span { font-size: .65rem; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
-}
+  @media (prefers-reduced-motion: reduce) {
+    .work-media img, .work-clip, .contact-card, .skill-card, .media-item { transition: none; }
+    .ice-transition { display: none; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -952,6 +996,7 @@ footer {
 </head>
 <body class="modal-open">
 <a class="skip-link" id="skipLink" href="#main-content">跳到主要内容</a>
+<div class="ice-transition" id="iceTransition" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
 <!-- ===== 加载动画 ===== -->
 <div class="loader" id="loader" role="status" aria-live="polite">
@@ -985,13 +1030,13 @@ footer {
 </nav>
 
 <aside class="story-timeline" id="storyTimeline" aria-label="页面时间线">
-  <div class="timeline-track" aria-hidden="true"><div class="timeline-progress"></div></div>
+  <div class="timeline-track"><div class="timeline-progress"></div><button class="timeline-playhead" id="timelinePlayhead" type="button" aria-label="拖动播放头跳转页面章节"></button></div>
   <ol class="timeline-list">
-    <li><a class="timeline-link active" href="#home" data-timeline="home" aria-current="step"><span>00:00</span><strong>开场</strong></a></li>
-    <li><a class="timeline-link" href="#about" data-timeline="about"><span>00:12</span><strong>关于</strong></a></li>
-    <li><a class="timeline-link" href="#works" data-timeline="works"><span>00:28</span><strong>剪辑</strong></a></li>
-    <li><a class="timeline-link" href="#skills" data-timeline="skills"><span>00:46</span><strong>技能</strong></a></li>
-    <li><a class="timeline-link" href="#contact" data-timeline="contact"><span>01:03</span><strong>联系</strong></a></li>
+    <li><a class="timeline-link active" href="#home" data-timeline="home" data-scene="SCENE 01 / OPENING" aria-current="step"><span>00:00</span><strong>开场</strong></a></li>
+    <li><a class="timeline-link" href="#about" data-timeline="about" data-scene="SCENE 02 / ABOUT"><span>00:12</span><strong>关于</strong></a></li>
+    <li><a class="timeline-link" href="#works" data-timeline="works" data-scene="SCENE 03 / WORKS"><span>00:28</span><strong>剪辑</strong></a></li>
+    <li><a class="timeline-link" href="#skills" data-timeline="skills" data-scene="SCENE 04 / SKILLS"><span>00:46</span><strong>技能</strong></a></li>
+    <li><a class="timeline-link" href="#contact" data-timeline="contact" data-scene="SCENE 05 / CONTACT"><span>01:03</span><strong>联系</strong></a></li>
   </ol>
 </aside>
 
@@ -1007,6 +1052,7 @@ footer {
     </div>
 
     <div class="monitor-screen">
+      <span class="scene-label" id="sceneLabel">SCENE 01 / OPENING</span>
       <span class="ice-crystal ice-crystal-one" aria-hidden="true">❄</span>
       <span class="ice-crystal ice-crystal-two" aria-hidden="true">✦</span>
 
@@ -1292,6 +1338,14 @@ footer {
     nav.classList.toggle('scrolled', scrollY > 10);
   }, { passive: true });
 
+  const iceTransition = document.getElementById('iceTransition');
+  function playIceTransition() {
+    iceTransition.classList.remove('active');
+    void iceTransition.offsetWidth;
+    iceTransition.classList.add('active');
+    setTimeout(() => iceTransition.classList.remove('active'), 700);
+  }
+
   // TEST1(首页/主要内容) 与 TEST2(其他) 相互切换
   const site = document.getElementById('main-content');
   const test2 = document.getElementById('test2');
@@ -1312,7 +1366,10 @@ footer {
     root.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
     root.style.scrollBehavior = '';
-    if (updateHash) history.replaceState(null, '', isTest2 ? '#test2' : '#test1');
+    if (updateHash) {
+      history.replaceState(null, '', isTest2 ? '#test2' : '#test1');
+      playIceTransition();
+    }
   }
   pageTabs.forEach(t => t.addEventListener('click', e => {
     e.preventDefault();
@@ -1323,7 +1380,6 @@ footer {
   document.getElementById('homeLink').addEventListener('click', e => {
     e.preventDefault();
     showPage('test1');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // 根据地址栏 hash 显示初始页面
@@ -1332,6 +1388,9 @@ footer {
   // 滚动时间线与播放头
   const storyTimeline = document.getElementById('storyTimeline');
   const timelineLinks = [...document.querySelectorAll('.timeline-link')];
+  const timelineTrack = storyTimeline.querySelector('.timeline-track');
+  const timelinePlayhead = document.getElementById('timelinePlayhead');
+  const sceneLabel = document.getElementById('sceneLabel');
   const timelineSections = timelineLinks
     .map(link => document.getElementById(link.dataset.timeline))
     .filter(Boolean);
@@ -1347,10 +1406,44 @@ footer {
     timelineLinks.forEach(link => {
       const active = link.dataset.timeline === activeId;
       link.classList.toggle('active', active);
-      if (active) link.setAttribute('aria-current', 'step');
-      else link.removeAttribute('aria-current');
+      if (active) {
+        link.setAttribute('aria-current', 'step');
+        sceneLabel.textContent = link.dataset.scene;
+      } else {
+        link.removeAttribute('aria-current');
+      }
     });
   }
+
+  function seekTimeline(progress) {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const clamped = Math.min(1, Math.max(0, progress));
+    window.scrollTo({ top: maxScroll * clamped, behavior: 'auto' });
+    updateStoryTimeline();
+  }
+  function seekFromPointer(event) {
+    const rect = timelineTrack.getBoundingClientRect();
+    const progress = rect.height > rect.width
+      ? (event.clientY - rect.top) / rect.height
+      : (event.clientX - rect.left) / rect.width;
+    seekTimeline(progress);
+  }
+  let draggingTimeline = false;
+  timelinePlayhead.addEventListener('pointerdown', event => {
+    draggingTimeline = true;
+    timelinePlayhead.classList.add('dragging');
+    timelinePlayhead.setPointerCapture(event.pointerId);
+    seekFromPointer(event);
+  });
+  timelinePlayhead.addEventListener('pointermove', event => {
+    if (draggingTimeline) seekFromPointer(event);
+  });
+  function stopTimelineDrag() {
+    draggingTimeline = false;
+    timelinePlayhead.classList.remove('dragging');
+  }
+  timelinePlayhead.addEventListener('pointerup', stopTimelineDrag);
+  timelinePlayhead.addEventListener('pointercancel', stopTimelineDrag);
   addEventListener('scroll', updateStoryTimeline, { passive: true });
   addEventListener('resize', updateStoryTimeline);
   updateStoryTimeline();
