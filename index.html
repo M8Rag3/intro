@@ -71,7 +71,11 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 78px;
+  }
 
   body {
       font-family: var(--font-body);
@@ -153,6 +157,8 @@
   /* ---------- Hero ---------- */
   .hero {
     position: relative; overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
     min-height: min(86vh, 760px);
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; text-align: center;
@@ -234,7 +240,12 @@
   .btn-ghost:hover { background: rgba(255,255,255,.12); transform: translateY(-3px); }
 
   /* ---------- 通用区块 ---------- */
-  section { padding: 88px 24px; scroll-margin-top: 70px; }
+  section {
+    padding: 88px 24px;
+    scroll-margin-top: 70px;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
   .section-head { text-align: center; margin-bottom: 56px; }
   .section-head .eyebrow {
     display: inline-block; font-size: .82rem; letter-spacing: .22em;
@@ -453,7 +464,11 @@
 
   /* ---------- 页面切换(TEST 标签页) ---------- */
   #main-content.hidden { display: none; }
-  .page { display: none; min-height: 70vh; }
+  .page {
+    display: none; min-height: 70vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
   .page.active { display: block; animation: pageIn .4s ease; }
   @keyframes pageIn {
     from { opacity: 0; transform: translateY(14px); }
